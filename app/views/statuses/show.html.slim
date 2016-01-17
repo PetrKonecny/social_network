@@ -1,0 +1,12 @@
+p#notice = notice
+
+p
+  strong Body:
+  = @status.body
+p
+  strong User:
+  = @status.user
+
+= link_to 'Edit', edit_status_path(@status)
+'|
+= link_to 'Back', statuses_path

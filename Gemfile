@@ -20,11 +20,13 @@ gem 'devise'
 gem 'pg'
 gem 'simple_form'
 gem 'slim-rails'
+gem 'high_voltage'
 gem 'therubyracer', :platform=>:ruby
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]
   gem 'rails_layout'
+  gem "letter_opener"
 end
 group :development, :test do
   gem 'pry-rails'

@@ -5,7 +5,7 @@ h2 = 'Your wall'
 - @statuses.each do |status|
     div [class= 'panel panel-default']
       div [class= 'panel panel-body']
-        h3 = link_to "#{status.user.profile.name} #{status.user.profile.surname}", profile_path(status.user)
+        h3 = link_to "#{status.user.profile.full_name}", profile_path(status.user)
         = status.body
         br
         br
@@ -16,6 +16,23 @@ h2 = 'Your wall'
         div
           = link_to 'Edit', edit_status_path(status)
           = link_to 'Destroy', status, data: {:confirm => 'Are you sure?'}, :method => :delete
+          = link_to 'Comment', new_status_comment_path(status)
         - if status.not_reacted_to_this?(current_user)
           = link_to 'Like', like_status_path(status), :method => :put
           = link_to 'Dislike', dislike_status_path(status), :method => :put
+        h4 = 'Comments'
+        - status.comments.each do |comment|
+            div [class= 'panel panel-default']
+              b = link_to "#{status.user.profile.full_name}", profile_path(status.user)
+              br
+              br
+              = comment.body
+              br
+              - if comment.not_reacted_to_this?(current_user)
+                = link_to 'Like', like_comment_path(comment), :method => :put
+                = link_to 'Dislike', dislike_comment_path(comment), :method => :put
+              br
+              |number of likes: #{comment.get_number_of_likes}
+              br
+              |number of dislikes: #{comment.get_number_of_dislikes}
+              br

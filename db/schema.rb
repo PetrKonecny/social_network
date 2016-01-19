@@ -41,14 +41,14 @@ ActiveRecord::Schema.define(version: 20160118153610) do
 
   create_table "reactions", force: :cascade do |t|
     t.integer  "reaction_type"
-    t.integer  "feelable_id"
-    t.string   "feelable_type"
+    t.integer  "rateable_id"
+    t.string   "rateable_type"
     t.integer  "user_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
 
-  add_index "reactions", ["feelable_type", "feelable_id"], name: "index_reactions_on_feelable_type_and_feelable_id", using: :btree
+  add_index "reactions", ["rateable_type", "rateable_id"], name: "index_reactions_on_rateable_type_and_rateable_id", using: :btree
   add_index "reactions", ["user_id"], name: "index_reactions_on_user_id", using: :btree
 
   create_table "statuses", force: :cascade do |t|

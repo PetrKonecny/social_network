@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
+  load_and_authorize_resource
   # GET /comments
   # GET /comments.json
   def index
@@ -43,7 +44,7 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
+        format.html { redirect_to statuses_url, notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit }
@@ -71,7 +72,7 @@ class CommentsController < ApplicationController
     @comment.reactions << Reaction.new(reaction_type: :dislike, user: current_user)
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to statuses_url, notice: 'Comment was successfully liked.' }
+        format.html { redirect_to statuses_url, notice: 'Comment was successfully disliked.' }
         format.json { render :show, status: :created, location: @status }
       else
         format.html { render :new }
@@ -85,7 +86,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
+      format.html { redirect_to statuses_url, notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

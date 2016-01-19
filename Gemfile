@@ -20,6 +20,7 @@ gem 'devise'
 gem 'pg'
 gem 'simple_form'
 gem 'slim-rails'
+gem 'cancancan'
 gem 'high_voltage'
 gem 'therubyracer', :platform=>:ruby
 group :development do

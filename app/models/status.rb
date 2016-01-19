@@ -1,6 +1,6 @@
 class Status < ActiveRecord::Base
   belongs_to :user
-  has_many :reactions, as: :feelable
+  has_many :reactions, as: :rateable
   has_many :comments, as: :commentable
 
   def get_number_of_likes
@@ -11,7 +11,8 @@ class Status < ActiveRecord::Base
     self.reactions.select{|obj| obj.reaction_type.eql?("dislike")}.count
   end
 
-  def not_reacted_to_this? (user)
-    self.reactions.select{|obj| obj.user.eql?(user)}.empty?
+  def get_user_reaction (user)
+    reaction = self.reactions.select{|obj| obj.user.eql?(user)}.first
+    reaction.reaction_type unless reaction.nil?
   end
 end

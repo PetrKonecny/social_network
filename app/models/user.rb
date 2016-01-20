@@ -13,4 +13,14 @@ class User < ActiveRecord::Base
 
   has_one :profile
   before_create :build_profile
+  has_many :reactions
+  has_many :comments
+  has_many :statuses
+
+
+
+  def get_reaction_to_rateable (rateable)
+    reaction = self.reactions.select{|obj| obj.rateable.eql?(rateable)}.first
+    reaction.reaction_type unless reaction.nil?
+  end
 end

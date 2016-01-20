@@ -12,10 +12,10 @@ class Ability
     can :read, Profile
     can :crud, Status, user_id: user.id
     can :rate, Comment do |comment|
-      comment.get_user_reaction(user).nil?
+      user.get_reaction_to_rateable(comment).nil?
     end
     can :rate, Status do |status|
-      status.get_user_reaction(user).nil?
+      user.get_reaction_to_rateable(status).nil?
     end
 
 

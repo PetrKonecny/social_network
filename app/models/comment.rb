@@ -11,8 +11,4 @@ class Comment < ActiveRecord::Base
     self.reactions.select{|obj| obj.reaction_type.eql?("dislike")}.count
   end
 
-  def get_user_reaction (user)
-    reaction = self.reactions.select{|obj| obj.user.eql?(user)}.first
-    reaction.reaction_type unless reaction.nil?
-  end
 end

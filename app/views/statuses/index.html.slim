@@ -17,7 +17,7 @@ h2 = 'Your wall'
           = link_to 'Like', like_status_path(status), :method => :put
           = link_to 'Dislike', dislike_status_path(status), :method => :put
         - else
-          |you #{status.get_user_reaction(current_user)} this
+          |you #{current_user.get_reaction_to_rateable(status)} this
         br
         br
         - if can? :crud, status
@@ -42,7 +42,7 @@ h2 = 'Your wall'
                   = link_to 'Like', like_comment_path(comment), :method => :put
                   = link_to 'Dislike', dislike_comment_path(comment), :method => :put
                 - else
-                  |you #{comment.get_user_reaction(current_user)} this
+                  |you #{current_user.get_reaction_to_rateable(comment)} this
                 br
                 br
                 -if can? :crud, comment

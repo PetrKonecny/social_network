@@ -77,7 +77,7 @@ Rails.application.configure do
     user_name: "ad0063ba8068a0ba5dd7f6216182745c",
     password: "5530b57236c338105662c3a6520a97e0"
     }
-  config.action_mailer.default_url_options = { host: 'floating-forest-6859.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'ENV[app_name]' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   # Don't care if the mailer can't send.
@@ -89,12 +89,3 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
   
-  config.serve_static_files = true
-  config.serve_static_assets = true
-  Rails.application.config.middleware.use ExceptionNotification::Rack,
-  :email => {
-    :email_prefix => "[PREFIX] ",
-    :sender_address => %{"notifier" <notifier@rubyHW2.com>},
-    :exception_recipients => %w{hanakjarek@gmail.com}
-  }
-end

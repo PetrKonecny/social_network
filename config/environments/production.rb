@@ -77,7 +77,7 @@ Rails.application.configure do
     user_name: "ad0063ba8068a0ba5dd7f6216182745c",
     password: "5530b57236c338105662c3a6520a97e0"
     }
-  config.action_mailer.default_url_options = { host: 'ENV[app_name]' }
+  config.action_mailer.default_url_options = { host: 'ENV[DOMAIN_NAME]' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   # Don't care if the mailer can't send.

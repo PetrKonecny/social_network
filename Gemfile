@@ -14,7 +14,6 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
 end
-gem 'administrate'
 gem 'bootstrap-sass'
 gem 'devise'
 gem 'pg'

@@ -75,10 +75,10 @@ class ProfilesController < ApplicationController
   end
 
   def friend_accept
-    friend = Profile.find(params[:friend])
+    friend = User.find(params[:friend])
     respond_to do |format|
-      current_user.accept_request(friend.user)
-      format.html { redirect_to @profile, notice: "Friend request from #{friend.full_name} was accepted"  }
+      current_user.accept_request(friend)
+      format.html { redirect_to @profile, notice: "Friend request from #{friend.profile.full_name} was accepted"  }
       format.json { render :show, status: :ok, location: @profile }
     end
   end

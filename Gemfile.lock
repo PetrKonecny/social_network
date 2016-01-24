@@ -92,6 +92,8 @@ GEM
     execjs (2.6.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    has_friendship (0.1.0)
+      rails (~> 4.0)
     high_voltage (2.4.0)
     i18n (0.7.0)
     inline_svg (0.6.1)
@@ -243,6 +245,7 @@ DEPENDENCIES
   cancancan
   coffee-rails (~> 4.1.0)
   devise
+  has_friendship
   high_voltage
   jbuilder (~> 2.0)
   jquery-rails

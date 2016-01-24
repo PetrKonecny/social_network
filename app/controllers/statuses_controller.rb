@@ -6,7 +6,8 @@ class StatusesController < ApplicationController
   # GET /statuses.json
   def index
     @status = Status.new
-    @statuses = Status.all
+    statuses = current_user.statuses | current_user.friends.collect { |x| x.statuses }
+    @statuses = statuses.flatten.sort { |x, y| y.created_at <=> x.created_at }
   end
 
   # GET /statuses/1

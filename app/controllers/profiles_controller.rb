@@ -62,6 +62,36 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def friend
+    respond_to do |format|
+      if current_user.friend_request(@profile.user)
+        format.html { redirect_to @profile, notice: "Friend request to #{@profile.full_name} was sent"  }
+        format.json { render :show, status: :ok, location: @profile }
+      else
+        format.html { redirect_to @profile, notice: "You must wait on #{@profile.full_name} to accept your friend request"  }
+        format.json { render :show, status: :ok, location: @profile }
+      end
+    end
+  end
+
+  def friend_accept
+    friend = Profile.find(params[:friend])
+    respond_to do |format|
+      current_user.accept_request(friend.user)
+      format.html { redirect_to @profile, notice: "Friend request from #{friend.full_name} was accepted"  }
+      format.json { render :show, status: :ok, location: @profile }
+    end
+  end
+
+  def friend_decline
+    friend = Profile.find(params[:friend])
+    respond_to do |format|
+      current_user.decline_request(friend.user)
+      format.html { redirect_to @profile, notice: "Friend request from #{friend.full_name} was declined"  }
+      format.json { render :show, status: :ok, location: @profile }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_profile

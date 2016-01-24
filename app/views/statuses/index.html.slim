@@ -1,5 +1,9 @@
 h2 = 'Tell us something'
 == render 'form'
+- if !current_user.requested_friends.empty?
+  br
+  h3 = "You have #{current_user.requested_friends.count} incoming friend request"
+  = link_to 'Accept or decline them', edit_profile_path(current_user.profile)
 br
 h2 = 'Your wall'
 - @statuses.each do |status|

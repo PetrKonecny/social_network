@@ -1,5 +1,13 @@
 h1 Editing profile
 
+- if !current_user.requested_friends.empty?
+  h2 = 'Incoming friend requests'
+  - @profile.user.requested_friends.each do |friend|
+    = friend.profile.full_name
+    = link_to 'Accept', friend_accept_profile_path(:friend => friend), :method => :post
+    = link_to 'Decline', friend_decline_profile_path(:friend => friend), :method => :post
+
+hr
 == render 'form'
 
 

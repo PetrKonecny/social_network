@@ -6,10 +6,13 @@ class Ability
     user ||= User.new
     alias_action :create, :read, :update, :destroy, to: :crud
     alias_action :like, :dislike, to: :rate
+    alias_action :friend_accept, :friend_decline, :to => :requests
     can :crud, Comment, user_id: user.id
     can :crud, User, user_id: user.id
     can :crud, Profile, user_id: user.id
+    can :requests, Profile, user_id: user.id
     can :read, Profile
+    can :friend, Profile
     can :crud, Status, user_id: user.id
     can :rate, Comment do |comment|
       user.get_reaction_to_rateable(comment).nil?

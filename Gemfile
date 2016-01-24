@@ -23,6 +23,7 @@ gem 'cancancan'
 gem 'administrate'
 gem 'high_voltage'
 gem 'therubyracer', :platform=>:ruby
+gem 'has_friendship'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]

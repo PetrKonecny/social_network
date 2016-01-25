@@ -74,6 +74,18 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def unfriend
+    respond_to do |format|
+      if current_user.remove_friend(@profile.user)
+        format.html { redirect_to @profile, notice: "Friendship with #{@profile.full_name} was canceled"  }
+        format.json { render :show, status: :ok, location: @profile }
+      else
+        format.html { redirect_to @profile, notice: 'You can`t cancel friendship unless you are already friends'  }
+        format.json { render :show, status: :ok, location: @profile }
+      end
+    end
+  end
+
   def friend_accept
     friend = User.find(params[:friend])
     respond_to do |format|

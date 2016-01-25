@@ -7,10 +7,10 @@ p
 
 p
   - if @profile.user != current_user
-    - if @profile.user.friends.include?(current_user)
+    - if can? :unfriend, @profile
       h3 = "You and #{@profile.full_name} are friends"
       = link_to 'Cancel friendship', unfriend_profile_path(@profile), :class => 'btn btn-danger btn-xs', data: {:confirm => 'Do you really want to cancel friendship?'}
-    - elsif @profile.user.requested_friends.include?(current_user)
+    - elsif can? :pending_friend_request, @profile
       h3 = "Friend request sent, wait for #{@profile.full_name}  to respond"
     - else
       = link_to 'Send friend request', friend_profile_path(@profile), :class => 'btn btn-default btn-xs'

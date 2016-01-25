@@ -7,13 +7,21 @@ class Ability
     alias_action :create, :read, :update, :destroy, to: :crud
     alias_action :like, :dislike, to: :rate
     alias_action :friend_accept, :friend_decline, :to => :requests
-    alias_action :friend, :unfriend, :to => :friendship
     can :crud, Comment, user_id: user.id
     can :crud, User, user_id: user.id
     can :crud, Profile, user_id: user.id
     can :requests, Profile, user_id: user.id
     can :read, Profile
-    can :friendship, Profile
+    can :friend, Profile
+    can :unfriend, Profile do |profile|
+      profile.user.friends.include?(user)
+    end
+    can :pending_friend_request, Profile do |profile|
+      profile.user.requested_friends.include?(user)
+    end
+    unless user.requested_friends.empty?
+      can :accept_friend_request, Profile
+    end
     can :crud, Status, user_id: user.id
     can :rate, Comment do |comment|
       user.get_reaction_to_rateable(comment).nil?
@@ -21,7 +29,6 @@ class Ability
     can :rate, Status do |status|
       user.get_reaction_to_rateable(status).nil?
     end
-
 
 
     # Define abilities for the passed in user here. For example:

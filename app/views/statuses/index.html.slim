@@ -1,3 +1,12 @@
+= form_tag(profiles_path, :method => "get", class: "navbar-form", id: "search-form") do
+  .row
+    .col-md-3
+      .input-group
+        = text_field_tag :search, params[:search], class: "form-control", placeholder: "Search Profiles"
+        span.input-group-btn
+          button.btn.btn-default type="submit"
+            span.glyphicon.glyphicon-search
+
 h2 = 'Tell us something'
 == render 'form'
 - if !current_user.requested_friends.empty?

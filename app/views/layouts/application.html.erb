@@ -18,18 +18,6 @@
     </header>
     <%= render 'layouts/messages' %>
     <div class="container">
-      <%= form_tag(profiles_path, :method => "get", class: "navbar-form", id: "search-form") do %>
-          <div class="row">
-            <div class="col-md-3">
-              <div class="input-group">
-                <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Search Profiles" %>
-                  <span class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-                  </span>
-              </div>
-            </div>
-          </div>
-      <% end %>
     <%= yield %>
     </div>
     <%= render 'layouts/footer' %>

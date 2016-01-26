@@ -7,6 +7,20 @@
           button.btn.btn-default type="submit"
             span.glyphicon.glyphicon-search
 
+
+table class="table table-striped fixed"
+  thead
+    tr
+      th = '#'
+      th = 'Name'
+      th
+  tbody
+    - @friends.each_with_index do |user, index|
+      tr
+        td = index +=1
+        td = user.profile.full_name
+        td = link_to "Send Message", "#", class: "btn btn-success btn-xs start-conversation", "data-sid" => current_user.id, "data-rip" => user.id
+
 h2 = 'Tell us something'
 == render 'form'
 - if !current_user.requested_friends.empty?

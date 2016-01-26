@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :reactions
   has_many :comments
   has_many :statuses
+  has_many :conversations, :foreign_key => :sender_id
 
 
 

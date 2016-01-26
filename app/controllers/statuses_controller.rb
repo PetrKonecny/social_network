@@ -8,6 +8,7 @@ class StatusesController < ApplicationController
     @status = Status.new
     statuses = current_user.statuses | current_user.friends.collect { |x| x.statuses }
     @statuses = statuses.flatten.sort { |x, y| y.created_at <=> x.created_at }
+    @friends = current_user.friends
   end
 
   # GET /statuses/1

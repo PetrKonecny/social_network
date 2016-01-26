@@ -25,6 +25,8 @@ gem 'high_voltage'
 gem 'therubyracer', :platform=>:ruby
 gem 'has_friendship'
 gem 'sixarm_ruby_unaccent'
+gem 'private_pub'
+gem 'thin'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]

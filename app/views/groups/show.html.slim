@@ -1,0 +1,18 @@
+p
+  h2 = @group.name
+
+= form_tag(insert_user_to_group_profile_group_path, method: "put") do
+  = label_tag 'insert_user', 'Add user to group: '
+  = text_field_tag :group_members, 'e-mail', :onclick => 'if($(this).val()=="e-mail"){$(this).val("");};'
+  = button_tag 'Insert', :type => 'submit', :class => "btn btn-primary"
+
+  br
+
+  tbody
+    - @members.each do |member|
+      tr
+        td = "#{member.surname} #{member.name}"
+        td = member
+        / td = link_to 'Show', profile_group_path(group.id, current_user.profile.id)
+        / td = link_to 'Edit', edit_profile_group_path(group.id, current_user.profile.id)
+        / td = link_to 'Remove', remove_user_profile_group_path(group.id, current_user.profile.id), data: {:confirm => 'Are you sure?'}, :method => :delete

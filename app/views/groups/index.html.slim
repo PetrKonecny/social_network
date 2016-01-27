@@ -1,0 +1,21 @@
+h1 My  groups
+
+table
+  thead
+    tr
+      th Name
+      th
+      th
+      th
+
+  tbody
+    - @groups.each do |group|
+      tr
+        td = group.name
+        td = link_to 'Show', profile_group_path(group.id, current_user.profile.id)
+        td = link_to 'Edit', edit_profile_group_path(group.id, current_user.profile.id)
+        td = link_to 'Destroy', profile_group_path(group.id, current_user.profile.id), data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Group', new_profile_group_path

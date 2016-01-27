@@ -24,6 +24,7 @@ gem 'administrate'
 gem 'high_voltage'
 gem 'therubyracer', :platform=>:ruby
 gem 'has_friendship'
+gem 'groupify'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]

@@ -12,6 +12,15 @@ Rails.application.routes.draw do
     resources :messages
   end
 
+  resources :profiles do
+    resources :groups do
+      member do 
+        put 'insert_user_to_group'
+        put 'remove_user'
+      end
+    end
+  end
+
   resources :comments do
     member do
       put 'like'

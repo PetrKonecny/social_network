@@ -27,6 +27,7 @@ gem 'has_friendship'
 gem 'sixarm_ruby_unaccent'
 gem 'private_pub'
 gem 'thin'
+gem 'groupify'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]

@@ -43,7 +43,7 @@
                   <div class="media-body">
                     <%= link_to "", conversation_path(conversation), class: "conversation", "data-cid" => conversation.id %>
                     <h4 class="media-heading"><%= conversation_interlocutor(conversation).profile.full_name %></h4>
-                    <%= conversation.messages.last.nil? ? "No messages" : truncate(conversation.messages.last.body, length: 45) %>
+                    <%= conversation.messages.last.nil? ? "No messages" : truncate(conversation.messages.last.body, length: 80) %>
                   </div>
                 </li>
 

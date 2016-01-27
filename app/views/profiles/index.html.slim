@@ -1,27 +1,16 @@
 h1 Listing profiles
 
-table
+table.table.table-striped.fixed
   thead
     tr
-      th User
       th Name
-      th Surname
       th Age
       th
       th
-      th
-
   tbody
     - @profiles.each do |profile|
       tr
-        td = profile.user
-        td = profile.name
-        td = profile.surname
+        td = profile.full_name
         td = profile.age
-        td = link_to 'Show', profile
-        td = link_to 'Edit', edit_profile_path(profile)
-        td = link_to 'Destroy', profile, data: {:confirm => 'Are you sure?'}, :method => :delete
-
-br
-
-= link_to 'New Profile', new_profile_path
+        td = link_to 'View', profile, class: "btn btn-success btn-xs"
+        td = link_to "Send Message", "#", class: "btn btn-warning btn-xs start-conversation", "data-sid" => current_user.id, "data-rip" => profile.user.id

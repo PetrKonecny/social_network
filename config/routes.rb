@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :chat, only: [:show]
+
   resources :conversations do
     resources :messages
   end

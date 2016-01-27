@@ -1,0 +1,35 @@
+.row.vertical-center-row
+  .text-center.col-md-8.col-md-offset-2
+    div style=("height: 300px; overflow-y: auto;")
+      .panel.panel-default
+        .panel-heading Friends
+        - if @friends.any?
+          table.table.table-striped.fixed
+            thead
+              tr
+                th #
+                th Name
+                th
+            tbody
+              - @friends.each_with_index do |user, index|
+                tr
+                  td= index +=1
+                  td= user.profile.full_name
+                  td
+                    = link_to "Send Message", "#", class: "btn btn-warning btn-xs start-conversation", "data-sid" => current_user.id, "data-rip" => user.id
+        - else
+          p You have`t added friends yet. Search for user profile if you want to chat directly without adding him.
+    hr
+    h3 Your Conversations
+    div style=("height: 400px; overflow-y: auto;")
+      - if @conversations.any?
+        ul.media-list
+          - @conversations.each do |conversation|
+            li.media
+              = image_tag("http://placehold.it/50x50", class: "media-object pull-left")
+              .media-body
+                = link_to "", conversation_path(conversation), class: "conversation", "data-cid" => conversation.id
+                h4.media-heading= conversation_interlocutor(conversation).profile.full_name
+                p= conversation.messages.last.nil? ? "No messages" : truncate(conversation.messages.last.body, length: 45)
+      - else
+        p You have no conversations. Click send message with any user to create one.

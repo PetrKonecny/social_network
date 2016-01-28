@@ -31,6 +31,23 @@ class GroupsController < ApplicationController
     @members = Profile.in_group(@group)
   end
 
+  def edit
+    @profile = Profile.find(params[:profile_id])
+  end
+
+  def update
+    @group.update(profile_params)
+    respond_to do |format|
+      if @group.save
+        format.html { redirect_to profile_groups_path, notice: 'Group was successfully updated.' }
+        format.json { render :show, status: :created, location: @group }
+      else
+        format.html { render :update }
+        format.json { render json: @group.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy
     @group.delete
     @groups = Group.with_member(current_user.profile)

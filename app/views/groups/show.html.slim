@@ -4,9 +4,10 @@ p
 = form_tag(insert_user_to_group_profile_group_path, method: "put") do
   = label_tag 'insert_user', 'Add user to group: '
   | &nbsp;
-  = text_field_tag :group_members, 'e-mail', :onclick => 'if($(this).val()=="e-mail"){$(this).val("");};'
-  | &nbsp;
-  = button_tag 'Insert', :type => 'submit', :class => "btn-sm btn-primary"
+  = text_field_tag :group_members, '', class: "form-control", placeholder: "Search Profiles"
+  span class="input-group-btn"
+  br
+  = button_tag 'Insert', :type => 'submit', :class => "btn-md btn-primary"
 
 br
 

@@ -70,18 +70,18 @@ class GroupsController < ApplicationController
       @group.save
       respond_to do |format|
         format.html { render :show }
-        format.json { redirect_to profile_group_path(@group), notice: 'User successfully add.' }
+        format.json { redirect_to profile_group_path(@group), notice: 'User successfully added.' }
       end
     end
   end
 
   def remove_user_from_group
-    new_group = Profile.in_group(@group).delete(Profile.find(params[:remove_profile]))
+    new_group = Group.find(@group.id).member.delete(Profile.find(params[:remove_profile]))
     new_group.save
     @members = Profile.in_group(@group)
     respond_to do |format|
       format.html { render :show }
-      format.json { redirect_to profile_group_path(@group), notice: 'User successfully remove.' }
+      format.json { redirect_to profile_group_path(@group), notice: 'User successfully removed.' }
     end
   end
 

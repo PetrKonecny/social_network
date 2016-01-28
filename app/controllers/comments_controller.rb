@@ -16,6 +16,7 @@ class CommentsController < ApplicationController
   # GET /comments/new
   def new
     @status = Status.find(params[:status_id])
+    @commentable = @status
     @comment = Comment.new
   end
 
@@ -26,11 +27,13 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @comment = Status.find(params[:status_id]).comments.create(comment_params)
+    klass = [Image, Status].detect{|c| params["#{c.name.underscore}_id"]}
+    @comment = klass.find(params["#{klass.name.underscore}_id"]).comments.create(comment_params)
     @comment.user = current_user
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to statuses_url, notice: 'Comment was successfully created.' }
+        format.html { redirect_to statuses_url, notice: 'Comment was successfully created.' } if klass.eql?(Status)
+        format.html { redirect_to image_url(@comment.commentable), notice: 'Comment was successfully created.' } if klass.eql?(Image)
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new }

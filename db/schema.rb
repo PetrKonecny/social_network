@@ -11,11 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160126111728) do
+ActiveRecord::Schema.define(version: 20160128170643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "unaccent"
+
+  create_table "albums", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "comments", force: :cascade do |t|
     t.text     "body"
@@ -67,6 +74,16 @@ ActiveRecord::Schema.define(version: 20160126111728) do
   create_table "groups", force: :cascade do |t|
     t.string "type"
     t.string "name"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.integer  "album_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "messages", force: :cascade do |t|

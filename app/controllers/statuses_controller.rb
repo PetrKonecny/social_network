@@ -67,7 +67,7 @@ class StatusesController < ApplicationController
 
   def like
     set_status
-    @status.reactions << Reaction.new(reaction_type: :like, user: current_user)
+    @status.reactions.create(reaction_type: :like, user: current_user)
     respond_to do |format|
       if @status.save
         format.html { redirect_to statuses_url, notice: 'Status was successfully liked.' }
@@ -81,7 +81,7 @@ class StatusesController < ApplicationController
 
   def dislike
     set_status
-    @status.reactions << Reaction.new(reaction_type: :dislike, user: current_user)
+    @status.reactions.create(reaction_type: :dislike, user: current_user)
     respond_to do |format|
       if @status.save
         format.html { redirect_to statuses_url, notice: 'Status was successfully disliked.' }

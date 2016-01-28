@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :statuses
   has_many :conversations, :foreign_key => :sender_id
-
+  has_many :albums
 
 
   def get_reaction_to_rateable (rateable)

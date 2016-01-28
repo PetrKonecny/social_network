@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  resources :images do
+    resources :comments
+    member do
+      put 'like'
+      put 'dislike'
+    end
+  end
+
+  resources :albums
   resources :profiles do
     member do
       get 'friend'

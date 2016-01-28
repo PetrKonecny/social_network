@@ -29,6 +29,9 @@ class Ability
     can :rate, Status do |status|
       user.get_reaction_to_rateable(status).nil?
     end
+    can :rate, Image do |image|
+      user.get_reaction_to_rateable(image).nil?
+    end
 
 
     # Define abilities for the passed in user here. For example:

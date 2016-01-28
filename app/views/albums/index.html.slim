@@ -1,0 +1,10 @@
+== render 'form'
+h1 Your albums
+.row
+  - @albums.each do |album|
+    div [class="col-xs-6 col-md-3"]
+      = album.name
+      = link_to image_tag(album.images.first.image.url(:thumb)), album, { class: "thumbnail" }
+br
+
+= link_to 'New Album', new_album_path

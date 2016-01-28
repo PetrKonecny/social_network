@@ -1,7 +1,8 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update, :destroy, :insert_user_to_group]
+  before_action :set_group, only: [:show, :edit, :update, :destroy, :insert_user_to_group, :remove_user_from_group]
 
   helper_method :insert_user_to_group
+  helper_method :remove_user_from_group
 
   def index
     @groups = Group.with_member(current_user.profile)
@@ -15,8 +16,6 @@ class GroupsController < ApplicationController
   def create
     @profile = Profile.find(params[:profile_id])
     @group = @profile.groups.new(profile_params)
-
-
     respond_to do |format|
       if @profile.save
         format.html { redirect_to profile_groups_path, notice: 'Group was successfully created.' }
@@ -30,6 +29,15 @@ class GroupsController < ApplicationController
 
   def show
     @members = Profile.in_group(@group)
+  end
+
+  def destroy
+    @group.delete
+    @groups = Group.with_member(current_user.profile)
+    respond_to do |format|
+      format.html { render :index }
+      format.json { redirect_to profile_groups_path, notice: 'Group successfully removed.' }
+    end
   end
 
   def insert_user_to_group
@@ -47,6 +55,16 @@ class GroupsController < ApplicationController
         format.html { render :show }
         format.json { redirect_to profile_group_path(@group), notice: 'User successfully add.' }
       end
+    end
+  end
+
+  def remove_user_from_group
+    new_group = Profile.in_group(@group).delete(Profile.find(params[:remove_profile]))
+    new_group.save
+    @members = Profile.in_group(@group)
+    respond_to do |format|
+      format.html { render :show }
+      format.json { redirect_to profile_group_path(@group), notice: 'User successfully remove.' }
     end
   end
 

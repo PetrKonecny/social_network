@@ -3,16 +3,32 @@ p
 
 = form_tag(insert_user_to_group_profile_group_path, method: "put") do
   = label_tag 'insert_user', 'Add user to group: '
-  = text_field_tag :group_members, 'e-mail', :onclick => 'if($(this).val()=="e-mail"){$(this).val("");};'
-  = button_tag 'Insert', :type => 'submit', :class => "btn btn-primary"
-
+  | &nbsp;
+  = text_field_tag :group_members, '', class: "form-control", placeholder: "Search Profiles"
+  span class="input-group-btn"
   br
+  = button_tag 'Insert', :type => 'submit', :class => "btn-md btn-primary"
 
-  tbody
-    - @members.each do |member|
-      tr
-        td = "#{member.surname} #{member.name}"
-        td = member
-        / td = link_to 'Show', profile_group_path(group.id, current_user.profile.id)
-        / td = link_to 'Edit', edit_profile_group_path(group.id, current_user.profile.id)
-        / td = link_to 'Remove', remove_user_profile_group_path(group.id, current_user.profile.id), data: {:confirm => 'Are you sure?'}, :method => :delete
+br
+
+.row
+  /! Not implemented on tutorial
+  .col-md-4
+    div style=("height: 400px; overflow-y: auto;")
+      .panel.panel-default
+        /! Default panel contents
+        .panel-heading Group members
+        /! Table
+        table.table
+          thead
+            tr
+              th Name
+              th Action
+              th
+
+          tbody
+            - @members.each do |member|
+              tr
+                td = member.full_name
+                td = link_to 'View', member, class: 'btn-xs btn-info'
+                td = link_to 'Remove', remove_user_from_group_profile_group_path(:remove_profile => member.id), :method => :put, class: 'btn-xs btn-danger'

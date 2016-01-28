@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     resources :groups do
       member do 
         put 'insert_user_to_group'
-        put 'remove_user'
+        put 'remove_user_from_group'
       end
     end
   end

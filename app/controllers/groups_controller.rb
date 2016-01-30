@@ -18,6 +18,8 @@ class GroupsController < ApplicationController
     @group = @profile.groups.new(profile_params)
     respond_to do |format|
       if @profile.save
+        @group.add current_user.profile, as: 'admin'
+        @group.save
         format.html { redirect_to profile_groups_path, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
@@ -66,7 +68,7 @@ class GroupsController < ApplicationController
         format.json { redirect_to profile_group_path(@group), notice: 'User not found.' }
       end
     else
-      @group.add new_user.profile
+      @group.add new_user.profile, as: 'other'
       @group.save
       respond_to do |format|
         format.html { render :show }
@@ -76,8 +78,8 @@ class GroupsController < ApplicationController
   end
 
   def remove_user_from_group
-    new_group = Group.find(@group.id).member.delete(Profile.find(params[:remove_profile]))
-    new_group.save
+    @group.group_memberships.delete(GroupMembership.where(:group_id => @group.id, :member_id => params[:remove_profile]).first)
+    @group.save
     @members = Profile.in_group(@group)
     respond_to do |format|
       format.html { render :show }

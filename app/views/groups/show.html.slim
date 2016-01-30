@@ -29,6 +29,7 @@ br
           tbody
             - @members.each do |member|
               tr
-                td = member.full_name
+                td = member.full_name + (Profile.in_group(@group).as(:admin).first == member ? ' (admin)' : '')
                 td = link_to 'View', member, class: 'btn-xs btn-info'
-                td = link_to 'Remove', remove_user_from_group_profile_group_path(:remove_profile => member.id), :method => :put, class: 'btn-xs btn-danger'
+                - if Profile.in_group(@group).as(:admin).first != member
+                  td = link_to 'Remove', remove_user_from_group_profile_group_path(:remove_profile => member.id), :method => :put, class: 'btn-xs btn-danger'

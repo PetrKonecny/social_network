@@ -19,8 +19,12 @@ h1 My  groups
               tr
                 td = group.name
                 td = link_to 'Show', profile_group_path(current_user.profile.id, group.id), class: 'btn-xs btn-success'
-                td = link_to 'Edit', edit_profile_group_path(current_user.profile.id, group.id), class: 'btn-xs btn-info'
-                td = link_to 'Destroy', profile_group_path(current_user.profile.id, group.id), data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn-xs btn-danger'
+                - if Profile.in_group(group).as(:admin).first == current_user.profile
+                  td = link_to 'Edit', edit_profile_group_path(current_user.profile.id, group.id), class: 'btn-xs btn-info'
+                  td = link_to 'Destroy', profile_group_path(current_user.profile.id, group.id), data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn-xs btn-danger'
+                - else
+                  td
+                  td
 
 br
 = link_to 'New Group', new_profile_group_path, class: 'btn-lg btn-primary'

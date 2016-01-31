@@ -1,5 +1,10 @@
-h2 = 'Tell us something'
-== render 'form'
+div [class= 'panel panel-default status']
+  .panel-body
+    .col-md-2
+      = image_tag(current_user.profile.profile_picture.url(:medium))
+    .col-md-10
+        h2 = 'Tell us something'
+        == render 'form'
 - if !current_user.requested_friends.empty?
   br
   h3 = "You have #{current_user.requested_friends.count} incoming friend request"
@@ -7,48 +12,55 @@ h2 = 'Tell us something'
 br
 h2 = 'Your wall'
 - @statuses.each do |status|
-    div [class= 'panel panel-default']
+    div [class= 'panel panel-default status']
       .panel-body
-        h3 = link_to "#{status.user.profile.full_name}", profile_path(status.user.profile)
-        = status.body
-        br
-        br
-        |number of likes: #{status.get_number_of_likes}
-        br
-        |number of dislikes: #{status.get_number_of_dislikes}
-        br
-        - if can? :rate, status
-          = link_to 'Like', like_status_path(status), :method => :put
-          = link_to 'Dislike', dislike_status_path(status), :method => :put
-        - else
-          |you #{current_user.get_reaction_to_rateable(status)} this
-        br
-        br
-        - if can? :crud, status
-          = link_to 'Edit ', edit_status_path(status)
-          = link_to 'Destroy ', status, data: {:confirm => 'Are you sure?'}, :method => :delete
-        = link_to 'Comment ', new_status_comment_path(status)
-        h4 = 'Comments'
-        - status.comments.each do |comment|
-            div [class= 'panel panel-default']
-              .panel-body
-                b = link_to "#{comment.user.profile.full_name}", profile_path(comment.user.profile)
+        .row
+          .col-md-2
+            .col-md-12
+              = image_tag(status.user.profile.profile_picture.url(:thumb))
+            div [class= 'col-md-12 side-text']
+              |likes: #{status.get_number_of_likes}
+              br
+              |dislikes: #{status.get_number_of_dislikes}
+              br
+              - if can? :rate, status
+                = link_to 'Like', like_status_path(status), :method => :put, class: 'like'
+                = " "
+                = link_to 'Dislike', dislike_status_path(status), :method => :put, class: 'dislike'
                 br
+              - else
+                |you #{current_user.get_reaction_to_rateable(status)} this
                 br
-                = comment.body
+              - if can? :crud, status
+                = link_to 'Edit ', edit_status_path(status)
                 br
-                br
-                |number of likes: #{comment.get_number_of_likes}
-                br
-                |number of dislikes: #{comment.get_number_of_dislikes}
-                br
-                - if can? :rate, comment
-                  = link_to 'Like', like_comment_path(comment), :method => :put
-                  = link_to 'Dislike', dislike_comment_path(comment), :method => :put
-                - else
-                  |you #{current_user.get_reaction_to_rateable(comment)} this
-                br
-                br
-                -if can? :crud, comment
-                  = link_to 'Edit ', edit_comment_path(comment)
-                  = link_to 'Destroy ', comment, data: {:confirm => 'Are you sure?'}, :method => :delete
+                = link_to 'Destroy ', status, data: {:confirm => 'Are you sure?'}, :method => :delete
+              br
+              = link_to 'Comment ', new_status_comment_path(status)
+          .col-md-10
+            h3 = link_to "#{status.user.profile.full_name}", profile_path(status.user.profile)
+            = status.body
+            h4 = 'Comments'
+            - status.comments.each do |comment|
+                div [class= 'panel panel-default comment']
+                  .panel-body
+                    b = link_to "#{comment.user.profile.full_name}", profile_path(comment.user.profile)
+                    br
+                    br
+                    = comment.body
+                    br
+                    br
+                    |number of likes: #{comment.get_number_of_likes}
+                    br
+                    |number of dislikes: #{comment.get_number_of_dislikes}
+                    br
+                    - if can? :rate, comment
+                      = link_to 'Like', like_comment_path(comment), :method => :put
+                      = link_to 'Dislike', dislike_comment_path(comment), :method => :put
+                    - else
+                      |you #{current_user.get_reaction_to_rateable(comment)} this
+                    br
+                    br
+                    -if can? :crud, comment
+                      = link_to 'Edit ', edit_comment_path(comment)
+                      = link_to 'Destroy ', comment, data: {:confirm => 'Are you sure?'}, :method => :delete

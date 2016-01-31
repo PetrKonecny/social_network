@@ -13,6 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+
 body {
   padding-top: 70px;
 }
@@ -33,3 +35,51 @@ li.media a {
   opacity: 0; /* Fix to make div clickable in IE */
   filter: alpha(opacity=1); /* Fix to make div clickable in IE */
 }
+
+.comment {
+  background-color: #ffffff;
+}
+.status h3 a {
+  color: cadetblue;
+}
+
+.form-panel {
+  bakground-color: cadetblue;
+}
+
+.status h3 a:hover {
+  color: #0085a1;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.like {
+  color: lightgreen;
+}
+
+.dislike {
+  color: #cc0000;
+}
+
+.status {
+  background-color: #f2f2f2;
+}
+
+.status .side-text {
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.status .side-text a{
+  text-transform: uppercase;
+}
+
+.status .side-text a:hover{
+  background-color: transparent;
+  text-decoration: none;
+  color: black;
+}
+
+a:visited{color:inherit}

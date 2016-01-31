@@ -1,6 +1,6 @@
 class Profile < ActiveRecord::Base
   belongs_to :user
-  has_attached_file :profile_picture, styles: { medium: "200x200#", thumb: "100x100#" }, default_url: "/images/:style/missing.png"
+  has_attached_file :profile_picture, styles: { medium: "200x200#", small: "100x100#", thumb: "50x50#" }, default_url: "http://placehold.it/50x50"
   validates_attachment_content_type :profile_picture, content_type: /\Aimage\/.*\Z/
   groupify :group_member
   groupify :named_group_member

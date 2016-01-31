@@ -1,6 +1,6 @@
 <li id="<%= message.id %>_<%= message.created_at.strftime("%d_%b_%Y_%I_%M_%S_%p") %>" class="<%=  self_or_other(message) %>">
     <div class="avatar">
-        <img src="http://placehold.it/50x50" />
+        <img src="<%= message_interlocutor(message).profile.profile_picture.url(:thumb) %>"  />
     </div>
     <div class="chatboxmessagecontent">
         <p><%= message.body %></p>

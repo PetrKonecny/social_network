@@ -17,7 +17,7 @@ h2 = 'Your wall'
         .row
           .col-md-2
             .col-md-12
-              = image_tag(status.user.profile.profile_picture.url(:thumb))
+              = image_tag(status.user.profile.profile_picture.url(:small))
             div [class= 'col-md-12 side-text']
               |likes: #{status.get_number_of_likes}
               br

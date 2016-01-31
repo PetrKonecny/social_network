@@ -22,4 +22,8 @@ class Image < ActiveRecord::Base
     self.reactions.select{|obj| obj.reaction_type.eql?("dislike")}.count
   end
 
+  def user
+    self.album.user
+  end
+
 end

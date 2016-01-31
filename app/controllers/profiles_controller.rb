@@ -15,6 +15,7 @@ class ProfilesController < ApplicationController
   # GET /profiles/1
   # GET /profiles/1.json
   def show
+    @activities = PublicActivity::Activity.order("created_at desc").where(owner_id: @profile.user.id, owner_type: "User")
   end
 
   # GET /profiles/new

@@ -6,9 +6,7 @@ class StatusesController < ApplicationController
   # GET /statuses.json
   def index
     @status = Status.new
-    statuses = current_user.statuses | current_user.friends.collect { |x| x.statuses }
-    @statuses = statuses.flatten.sort { |x, y| y.created_at <=> x.created_at }
-    @friends = current_user.friends
+    @activities = PublicActivity::Activity.where(owner_id: current_user.friends_and_mine_ids, owner_type: "User").order('created_at DESC').limit(20)
   end
 
   # GET /statuses/1

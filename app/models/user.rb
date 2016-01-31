@@ -25,4 +25,8 @@ class User < ActiveRecord::Base
     reaction = self.reactions.select{|obj| obj.rateable.eql?(rateable)}.first
     reaction.reaction_type unless reaction.nil?
   end
+
+  def friends_and_mine_ids
+    self.friends.collect { |x| x.id } << self.id
+  end
 end

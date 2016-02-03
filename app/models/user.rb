@@ -1,11 +1,8 @@
 class User < ActiveRecord::Base
+  before_create :build_profile
   has_friendship
   enum role: [:user, :vip, :admin]
   after_initialize :set_default_role, :if => :new_record?
-  
-  def set_default_role
-    self.role ||= :user
-  end
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -13,7 +10,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_one :profile
-  before_create :build_profile
   has_many :reactions
   has_many :comments
   has_many :statuses
@@ -28,5 +24,9 @@ class User < ActiveRecord::Base
 
   def friends_and_mine_ids
     self.friends.collect { |x| x.id } << self.id
+  end
+
+  def set_default_role
+    self.role ||= :user
   end
 end

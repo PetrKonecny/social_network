@@ -23,6 +23,8 @@ class Ability
       can :accept_friend_request, Profile
     end
     can :crud, Status, user_id: user.id
+    can :read, Status
+    can :read, Comment
     can :rate, Comment do |comment|
       user.get_reaction_to_rateable(comment).nil?
     end

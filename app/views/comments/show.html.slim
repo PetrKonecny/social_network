@@ -1,6 +1,4 @@
-p#notice = notice
-
-
-= link_to 'Edit', edit_comment_path(@comment)
-'|
-= link_to 'Back', comments_path
+.status
+  .panel-body
+    h3 = (link_to(@comment.user.profile.full_name,@comment.user.profile)) +" on " +(link_to(@comment.commentable.user.profile.full_name,@comment.commentable.user.profile))+"'s " +(link_to(@comment.commentable.class.name,@comment.commentable))
+    = render partial: 'comments/show', locals: {comment: @comment}

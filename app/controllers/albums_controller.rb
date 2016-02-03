@@ -27,13 +27,9 @@ class AlbumsController < ApplicationController
   def create
     @album = Album.new(album_params)
     @album.user = current_user
+    @album.pictures = params[:images] if params[:images]
     respond_to do |format|
       if @album.save
-        if params[:images]
-          params[:images].each { |image|
-            @album.images.create(image: image)
-          }
-        end
         format.html { redirect_to @album, notice: 'Album was successfully created.' }
         format.json { render :show, status: :created, location: @album }
       else

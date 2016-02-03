@@ -1,0 +1,22 @@
+div [class= 'panel panel-default comment']
+  .panel-body
+    b = link_to "#{comment.user.profile.full_name}", profile_path(comment.user.profile)
+    br
+    br
+    = comment.body
+    br
+    br
+    |number of likes: #{comment.get_number_of_likes}
+    br
+    |number of dislikes: #{comment.get_number_of_dislikes}
+    br
+    - if can? :rate, comment
+      = link_to 'Like', like_comment_path(comment), :method => :put
+      = link_to 'Dislike', dislike_comment_path(comment), :method => :put
+    - else
+      |you #{current_user.get_reaction_to_rateable(comment)} this
+    br
+    br
+    -if can? :crud, comment
+      = link_to 'Edit ', edit_comment_path(comment)
+      = link_to 'Destroy ', comment, data: {:confirm => 'Are you sure?'}, :method => :delete

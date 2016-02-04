@@ -57,6 +57,10 @@ li.media a {
   color: lightgreen;
 }
 
+.left {
+  float: left;
+}
+
 .dislike {
   color: #cc0000;
 }
@@ -65,18 +69,23 @@ li.media a {
   background-color: #f2f2f2;
 }
 
-.status .side-text {
+.side-text {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: 800;
   letter-spacing: 1px;
 }
 
-.status .side-text a{
+.panel-footer{
+  background-color: inherit;
+}
+
+
+.side-text a{
   text-transform: uppercase;
 }
 
-.status .side-text a:hover{
+.side-text a:hover{
   background-color: transparent;
   text-decoration: none;
   color: black;

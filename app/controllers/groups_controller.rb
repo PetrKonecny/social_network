@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update, :destroy, :insert_user_to_group, :remove_user_from_group]
+  before_action :set_group, only: [:show, :edit, :update, :destroy, :insert_user_to_group, :remove_user_from_group, :create_status]
 
   helper_method :insert_user_to_group
   helper_method :remove_user_from_group
@@ -31,6 +31,8 @@ class GroupsController < ApplicationController
 
   def show
     @members = Profile.in_group(@group)
+    @statuses = Status.where(group_id: @group.id)
+    @activities = PublicActivity::Activity.where(owner_id: current_user.friends_and_mine_ids, owner_type: "User").order('created_at DESC').limit(20)
   end
 
   def edit
@@ -85,6 +87,24 @@ class GroupsController < ApplicationController
       format.html { render :show }
       format.json { redirect_to profile_group_path(@group), notice: 'User successfully removed.' }
     end
+  end
+
+  def create_status
+    @members = Profile.in_group(@group)
+    @status = Status.new(:body => params[:status], :group_id => params[:id])
+    @status.user = current_user
+    respond_to do |format|
+      if @status.save
+        @statuses = Status.where(group_id: @group.id)
+        format.json { redirect_to profile_group_path(@group), notice: 'Status was successfully created.' }
+        format.html { render :show }
+      else
+        @statuses = Status.where(group_id: @group.id)
+        format.html { render :show }
+        format.json { render json: @status.errors, status: :unprocessable_entity }
+      end
+    end
+
   end
 
   private    

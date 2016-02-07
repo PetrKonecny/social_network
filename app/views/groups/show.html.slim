@@ -14,7 +14,7 @@ br
 .row
   /! Not implemented on tutorial
   .col-md-4
-    div style=("height: 400px; overflow-y: auto;")
+    div style=("height: 200px; overflow-y: auto;")
       .panel.panel-default
         /! Default panel contents
         .panel-heading Group members
@@ -33,3 +33,29 @@ br
                 td = link_to 'View', member, class: 'btn-xs btn-info'
                 - if Profile.in_group(@group).as(:admin).first != member
                   td = link_to 'Remove', remove_user_from_group_profile_group_path(:remove_profile => member.id), :method => :put, class: 'btn-xs btn-danger'
+
+
+br
+div [class= 'panel panel-default status']
+  .panel-body
+    .col-md-2
+      = image_tag(current_user.profile.profile_picture.url(:medium))
+    .col-md-10
+      h2 Tell us something
+      = form_tag(create_status_profile_group_path, method: "put") do
+        = label_tag 'insert status', '* Body:'
+        br
+        = text_field_tag :status, '', class: "string required form-control"
+        br
+        = button_tag 'Create', :type => 'submit', class: "btn btn-default"
+- if !current_user.requested_friends.empty?
+  br
+  h3 = "You have #{current_user.requested_friends.count} incoming friend request"
+  = link_to 'Accept or decline them', edit_profile_path(current_user.profile)
+br
+
+hr
+p
+  h2 Status in group
+  - @statuses.each do |status|
+    h4 = status.body

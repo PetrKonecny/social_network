@@ -1,0 +1,8 @@
+= form_for(@status) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :body
+
+  .form-actions
+    = f.button :submit

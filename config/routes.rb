@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       member do 
         put 'insert_user_to_group'
         put 'remove_user_from_group'
+        put 'create_status'
       end
     end
   end

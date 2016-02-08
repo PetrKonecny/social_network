@@ -1,0 +1,31 @@
+= form_tag(insert_user_to_group_profile_group_path, method: "put") do
+  = label_tag 'insert_user', 'Add user to group: '
+  | &nbsp;
+  = text_field_tag :group_members, '', class: "form-control", placeholder: "Search Profiles"
+  span class="input-group-btn"
+  br
+  = button_tag 'Insert', :type => 'submit', :class => "btn-md btn-primary"
+
+br
+.row
+  /! Not implemented on tutorial
+  .col-md-4
+    div style=("overflow-x: auto; overflow-y: auto;")
+      .panel.panel-default
+        /! Default panel contents
+        .panel-heading Group members
+        /! Table
+        table.table
+          thead
+            tr
+              th Name
+              th Action
+              th
+
+          tbody
+            - @members.each do |member|
+              tr
+                td = member.full_name + (Profile.in_group(@group).as(:admin).first == member ? ' (admin)' : '')
+                td = link_to 'View', member, class: 'btn btn-info'
+                - if Profile.in_group(@group).as(:admin).first != member
+                  td = link_to 'Remove', remove_user_from_group_profile_group_path(:remove_profile => member.id), :method => :put, class: 'btn btn-danger'

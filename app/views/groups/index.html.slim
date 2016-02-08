@@ -1,11 +1,10 @@
 h1 My  groups
 
-.row
+.vertical-center-row
   /! Not implemented on tutorial
-  .col-md-4
-    div style=("weight: 200px; overflow-y: auto;")
+  .col-md-8
+    div style=("overflow-x: auto; overflow-y: auto;")
       .panel.panel-default
-        /! Default panel contents
         /! Table
         table.table
           thead
@@ -14,18 +13,22 @@ h1 My  groups
               th Action
               th
               th
+              th
           tbody
             - @groups.each do |group|
               tr
                 td = group.name
-                td = link_to 'Show', profile_group_path(current_user.profile.id, group.id), class: 'btn-xs btn-success'
+                td = link_to 'Show wall', profile_group_path(current_user.profile.id, group.id), class: 'btn btn-success'
+                td = link_to 'Show members', show_members_profile_group_path(current_user.profile.id, group.id), class: 'btn btn-success'
                 - if Profile.in_group(group).as(:admin).first == current_user.profile
-                  td = link_to 'Edit', edit_profile_group_path(current_user.profile.id, group.id), class: 'btn-xs btn-info'
-                  td = link_to 'Destroy', profile_group_path(current_user.profile.id, group.id), data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn-xs btn-danger'
+                  td = link_to 'Edit', edit_profile_group_path(current_user.profile.id, group.id), class: 'btn btn-info'
+                  td = link_to 'Destroy', profile_group_path(current_user.profile.id, group.id), data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-danger'
                 - else
                   td
                   td
+
+.row
 br
-= link_to 'New Group', new_profile_group_path, class: 'btn-lg btn-primary'
+= link_to 'New Group', new_profile_group_path, class: 'btn btn-default'
 br
 br

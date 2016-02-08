@@ -1,8 +1,10 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: [:show, :edit, :update, :destroy, :insert_user_to_group, :remove_user_from_group, :create_status]
+  before_action :set_group, only: [:show, :edit, :update, :destroy, :insert_user_to_group, :remove_user_from_group, :create_status, :show_members]
 
   helper_method :insert_user_to_group
   helper_method :remove_user_from_group
+  helper_method :show_members
+  helper_method :create_status
 
   def index
     @groups = Group.with_member(current_user.profile)
@@ -30,9 +32,12 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @members = Profile.in_group(@group)
     @statuses = Status.where(group_id: @group.id)
     @activities = PublicActivity::Activity.where(owner_id: current_user.friends_and_mine_ids, owner_type: "User").order('created_at DESC').limit(20)
+  end
+
+  def show_members
+    @members = Profile.in_group(@group)
   end
 
   def edit

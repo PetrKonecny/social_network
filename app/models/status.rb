@@ -1,4 +1,5 @@
 class Status < ActiveRecord::Base
+  belongs_to :group
   belongs_to :user
   has_many :reactions, as: :rateable
   has_many :comments, as: :commentable

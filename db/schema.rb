@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160131190946) do
+ActiveRecord::Schema.define(version: 20160207174848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,8 +146,10 @@ ActiveRecord::Schema.define(version: 20160131190946) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "group_id"
   end
 
+  add_index "statuses", ["group_id"], name: "index_statuses_on_group_id", using: :btree
   add_index "statuses", ["user_id"], name: "index_statuses_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -179,5 +181,6 @@ ActiveRecord::Schema.define(version: 20160131190946) do
   add_foreign_key "messages", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "reactions", "users"
+  add_foreign_key "statuses", "groups"
   add_foreign_key "statuses", "users"
 end

@@ -5,7 +5,7 @@
       .panel-body
         .row
           .col-md-2
-            = image_tag(current_user.profile.profile_picture.url(:medium))
+            = image_tag(@profile.profile_picture.url(:medium))
           .col-md-10
             strong age:
             = @profile.age

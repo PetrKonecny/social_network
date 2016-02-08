@@ -58,4 +58,4 @@ hr
 p
   h2 Status in group
   - @statuses.each do |status|
-    h4 = status.body
+      = render partial: 'statuses/show', locals: {status: status}

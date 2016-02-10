@@ -7,5 +7,5 @@
             = image_tag(a.trackable.user.profile.profile_picture.url(:small))
           div [class= 'col-md-12 side-text']
         .col-md-10
-          h3 = (link_to(a.trackable.user.profile.full_name, a.trackable.user.profile))+ " commented on "+(link_to(a.trackable.user.profile.full_name, a.trackable.user.profile))+"'s " + (link_to(a.trackable.commentable.class.name, a.trackable.commentable))
+          h3 = (link_to(a.trackable.user.profile.full_name, a.trackable.user.profile))+ " commented on "+(link_to(a.trackable.commentable.user.profile.full_name, a.trackable.commentable.user.profile))+"'s " + (link_to(a.trackable.commentable.class.name, a.trackable.commentable))
           = render partial: 'comments/show', locals: {comment: a.trackable}

@@ -8,7 +8,7 @@ div [class= 'panel panel-default status']
       = image_tag(current_user.profile.profile_picture.url(:medium))
     .col-md-10
       h2 Tell us something
-      = form_tag(create_status_profile_group_path, method: "put") do
+      = form_tag(create_status_group_path, method: "put") do
         = label_tag 'insert status', '* Body:'
         br
         = text_field_tag :status, '', class: "string required form-control"
@@ -16,8 +16,6 @@ div [class= 'panel panel-default status']
         = button_tag 'Create', :type => 'submit', class: "btn btn-default"
 - if !current_user.requested_friends.empty?
   br
-  h3 = "You have #{current_user.requested_friends.count} incoming friend request"
-  = link_to 'Accept or decline them', edit_profile_path(current_user.profile)
 br
 
 hr

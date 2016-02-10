@@ -13,6 +13,32 @@
     .side-text
       = link_to 'edit profile info', edit_profile_path(@profile)
 p
+-if @profile.user != current_user
+  h3 = raw "You and " + @profile.name
+  .status
+    .panel-body
+      - if can? :unfriend, @profile
+        h5 = "are friends"
+        = link_to 'Cancel friendship', unfriend_profile_path(@profile), :class => 'btn btn-danger btn-xs', data: {:confirm => 'Do you really want to cancel friendship?'}
+      - elsif can? :pending_friend_request, @profile
+        h5 = "Friend request sent, wait for #{@profile.full_name}  to respond"
+      - else
+        h5 = "are not friends"
+        = link_to 'Send friend request', friend_profile_path(@profile), :class => 'btn btn-default btn-xs'
+
+
+h3 Friends
+.status
+  .panel-body
+    - if can? :unfriend, @profile
+    h4 = @profile.user.friends.count.to_s + " friends total :"
+    - @profile.user.friends.each do |friend|
+      div [class="col-xs-6 col-md-2 comment"]
+        div [class="panel-header center"]
+            h5 = friend.profile.full_name
+        .panel-body
+          = link_to image_tag(friend.profile.profile_picture.url(:small)), friend.profile
+
 h3 Albums
 .status
   .panel-body
@@ -26,15 +52,7 @@ h3 Albums
     .side-text
       = link_to 'New Album', new_album_path
 
-p
-  - if @profile.user != current_user
-    - if can? :unfriend, @profile
-      h3 = "You and #{@profile.full_name} are friends"
-      = link_to 'Cancel friendship', unfriend_profile_path(@profile), :class => 'btn btn-danger btn-xs', data: {:confirm => 'Do you really want to cancel friendship?'}
-    - elsif can? :pending_friend_request, @profile
-      h3 = "Friend request sent, wait for #{@profile.full_name}  to respond"
-    - else
-      = link_to 'Send friend request', friend_profile_path(@profile), :class => 'btn btn-default btn-xs'
+
 
 h3 Recent activity
 = render_activities(@activities)

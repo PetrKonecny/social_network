@@ -4,7 +4,9 @@ div [class= 'panel panel-default status']
       .col-md-2
           = image_tag(status.user.profile.profile_picture.url(:small))
       .col-md-10
-        h3 = (link_to("#{status.user.profile.full_name}", profile_path(status.user.profile)))+" new status"
+        h3 = (link_to("#{status.user.profile.full_name}", profile_path(status.user.profile)))+" posted"
+        - if status.group
+          h4 = raw "posted in " + (link_to(status.group.name,status.group))
         .comment
           .panel-body
             = status.body

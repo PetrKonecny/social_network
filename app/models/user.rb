@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   has_many :conversations, :foreign_key => :sender_id
   has_many :albums
 
+  include PublicActivity::Model
 
   def get_reaction_to_rateable (rateable)
     reaction = self.reactions.select{|obj| obj.rateable.eql?(rateable)}.first

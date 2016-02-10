@@ -41,7 +41,6 @@ class GroupsController < ApplicationController
   end
 
   def edit
-    @profile = Profile.find(params[:profile_id])
   end
 
   def update

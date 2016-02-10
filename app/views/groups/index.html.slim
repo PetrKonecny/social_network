@@ -18,17 +18,17 @@ h1 My  groups
             - @groups.each do |group|
               tr
                 td = group.name
-                td = link_to 'Show wall', profile_group_path(current_user.profile.id, group.id), class: 'btn btn-success'
-                td = link_to 'Show members', show_members_profile_group_path(current_user.profile.id, group.id), class: 'btn btn-success'
+                td = link_to 'Show wall', group, class: 'btn btn-success'
+                td = link_to 'Show members', show_members_group_path(group.id), class: 'btn btn-success'
                 - if Profile.in_group(group).as(:admin).first == current_user.profile
-                  td = link_to 'Edit', edit_profile_group_path(current_user.profile.id, group.id), class: 'btn btn-info'
-                  td = link_to 'Destroy', profile_group_path(current_user.profile.id, group.id), data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-danger'
+                  td = link_to 'Edit', edit_group_path(group.id), class: 'btn btn-info'
+                  td = link_to 'Destroy', group, data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-danger'
                 - else
                   td
                   td
 
 .row
 br
-= link_to 'New Group', new_profile_group_path, class: 'btn btn-default'
+= link_to 'New Group', new_group_path, class: 'btn btn-default'
 br
 br

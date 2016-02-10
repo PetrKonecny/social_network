@@ -43,6 +43,17 @@ li.media a {
   color: cadetblue;
 }
 
+.status h4 a {
+  color: cadetblue;
+}
+
+
+.status h4 a:hover {
+  color: #0085a1;
+  background-color: transparent;
+  text-decoration: none;
+}
+
 .form-panel {
   bakground-color: cadetblue;
 }
@@ -63,6 +74,12 @@ li.media a {
 
 .dislike {
   color: #cc0000;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .status {

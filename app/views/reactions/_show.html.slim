@@ -1,9 +1,7 @@
 div [class= 'panel panel-default status']
   .panel-body
     .row
-      .col-md-2
-        .col-md-12
-          = image_tag(reaction.user.profile.profile_picture.url(:small))
-        div [class= 'col-md-12 side-text']
-      .col-md-10
+      .col-md-1
+        = image_tag(reaction.user.profile.profile_picture.url(:small))
+      .col-md-11
         h3 = (link_to(reaction.user.profile.full_name,reaction.user.profile)) + " #{reaction.reaction_type}d "+(link_to(reaction.rateable.user.profile.full_name, reaction.rateable.user.profile))+"'s " + (link_to(reaction.rateable.class.name,reaction.rateable))

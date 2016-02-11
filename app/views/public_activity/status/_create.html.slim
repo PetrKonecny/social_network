@@ -1,2 +1,2 @@
-- if a.trackable
+- if a.trackable and (a.trackable.group.nil? or can? :read, a.trackable.group)
   = render partial: 'statuses/show', locals: {status: a.trackable}

@@ -17,6 +17,15 @@
 
 body {
   padding-top: 70px;
+  background-color: #f0f0f0;
+  font-family: 'Lora', 'Times New Roman', serif;
+  font-size: 15px;
+  color: #404040;
+}
+
+h1,h2,h3,h4 {
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 600;
 }
 
 li.media {
@@ -37,7 +46,7 @@ li.media a {
 }
 
 .comment {
-  background-color: #ffffff;
+  background-color: #f2f2f2;
 }
 .status h3 a {
   color: cadetblue;
@@ -83,7 +92,7 @@ li.media a {
 }
 
 .status {
-  background-color: #f2f2f2;
+  background-color: #ffffff;
 }
 
 .side-text {
@@ -106,6 +115,11 @@ li.media a {
   background-color: transparent;
   text-decoration: none;
   color: black;
+}
+
+.no-padding {
+  padding-left: 0px;
+  padding-bottom: 0px;
 }
 
 a:visited{color:inherit}

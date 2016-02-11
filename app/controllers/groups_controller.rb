@@ -11,18 +11,15 @@ class GroupsController < ApplicationController
   end
 
   def new
-    @profile = Profile.find(params[:profile_id])
-    @group = @profile.groups.build
+    @group = Group.new
   end
 
   def create
-    @profile = Profile.find(params[:profile_id])
-    @group = @profile.groups.new(profile_params)
+    @group = Group.new(group_params)
     respond_to do |format|
-      if @profile.save
-        @group.add current_user.profile, as: 'admin'
-        @group.save
-        format.html { redirect_to profile_groups_path, notice: 'Group was successfully created.' }
+      if @group.add current_user.profile, as: 'admin'
+        PublicActivity::Activity.where(owner_id: current_user.id, trackable_type: 'GroupMembership').last.destroy
+        format.html { redirect_to groups_path, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
         format.html { render :new }
@@ -34,6 +31,7 @@ class GroupsController < ApplicationController
   def show
     @statuses = Status.where(group_id: @group.id)
     @activities = PublicActivity::Activity.where(owner_id: current_user.friends_and_mine_ids, owner_type: "User").order('created_at DESC').limit(20)
+    @members = Profile.in_group(@group)
   end
 
   def show_members
@@ -44,7 +42,7 @@ class GroupsController < ApplicationController
   end
 
   def update
-    @group.update(profile_params)
+    @group.update(group_params)
     respond_to do |format|
       if @group.save
         format.html { redirect_to profile_groups_path, notice: 'Group was successfully updated.' }
@@ -74,8 +72,7 @@ class GroupsController < ApplicationController
         format.json { redirect_to profile_group_path(@group), notice: 'User not found.' }
       end
     else
-      @group.add new_user.profile, as: 'other'
-      @group.save
+      @group.add new_user.profile
       respond_to do |format|
         format.html { render :show }
         format.json { redirect_to profile_group_path(@group), notice: 'User successfully added.' }
@@ -117,7 +114,7 @@ class GroupsController < ApplicationController
     end
 
       # Never trust parameters from the scary internet, only allow the white list through.
-    def profile_params
+    def group_params
       params.require(:group).permit(:name)
     end
 

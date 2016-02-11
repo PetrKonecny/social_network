@@ -9,6 +9,25 @@ div [class= 'panel panel-default status']
   br
   h3 = "You have #{current_user.requested_friends.count} incoming friend request"
   = link_to 'Accept or decline them', edit_profile_path(current_user.profile)
-br
-h2 = 'Your wall'
-= render_activities(@activities)
+.row
+  .col-md-9
+    = render_activities(@activities)
+  div[class='col-md-3 no-padding']
+    div[class='panel panel-default status']
+      .panel-body
+        h4 = "Your friends"
+        -current_user.friends.each do |friend|
+          .row
+            .col-md-3
+              = image_tag(friend.profile.profile_picture.url(:thumb))
+            .col-md-9
+              = link_to(friend.profile.full_name, friend.profile)
+    div[class='panel panel-default status']
+      .panel-body
+        h4 = "Your groups"
+        - Group.with_member(current_user.profile).each do |group|
+          .row
+            .col-md-9
+              = link_to(group.name, group)
+
+

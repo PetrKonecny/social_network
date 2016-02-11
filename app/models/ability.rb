@@ -35,6 +35,14 @@ class Ability
       user.get_reaction_to_rateable(image).nil?
     end
 
+    can :manage, Group do |group|
+      user.profile.in_group?(group, as: 'admin')
+    end
+
+    can [:read, :create_status], Group do |group|
+      user.profile.in_group?(group)
+    end
+
 
     # Define abilities for the passed in user here. For example:
     #

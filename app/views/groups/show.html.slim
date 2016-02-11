@@ -2,24 +2,39 @@ p
   h2 = @group.name
 
 br
-div [class= 'panel panel-default status']
-  .panel-body
-    .col-md-2
-      = image_tag(current_user.profile.profile_picture.url(:medium))
-    .col-md-10
-      h2 Tell us something
-      = form_tag(create_status_group_path, method: "put") do
-        = label_tag 'insert status', '* Body:'
-        br
-        = text_field_tag :status, '', class: "string required form-control"
-        br
-        = button_tag 'Create', :type => 'submit', class: "btn btn-default"
-- if !current_user.requested_friends.empty?
-  br
-br
+-if can? :create_status, @group
+  div [class= 'panel panel-default status']
+    .panel-body
+      .col-md-2
+        = image_tag(current_user.profile.profile_picture.url(:medium))
+      .col-md-10
+        h2 Post into group
+        = form_tag(create_status_group_path, method: "put") do
+          = label_tag 'insert status', '* Body:'
+          br
+          = text_field_tag :status, '', class: "string required form-control"
+          br
+          = button_tag 'Post', :type => 'submit', class: "btn btn-default"
 
-hr
-p
-  h2 Status in group
-  - @statuses.each do |status|
-      = render partial: 'statuses/show', locals: {status: status}
+.row
+  .col-md-9
+    - @group.statuses.each do |status|
+        = render partial: 'statuses/show', locals: {status: status}
+  div[class='col-md-3 no-padding']
+    div[class='panel panel-default status']
+      .panel-body
+        h4 = raw "Group members (" + @members.count.to_s + ")"
+        - @members.each do |member|
+          .row
+            .col-md-3
+              = image_tag(member.profile_picture.url(:thumb))
+            .col-md-9
+              = link_to(member.full_name , member)
+          br
+        - if can? :manage, @group
+          = form_tag(insert_user_to_group_group_path, method: "put") do
+            = label_tag 'insert_user', 'Add user to group: '
+            | &nbsp;
+            = text_field_tag :group_members, '', class: "form-control", placeholder: "Search Profiles"
+            br
+            = button_tag 'Insert', :type => 'submit', :class => "btn-default"

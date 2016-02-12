@@ -1,49 +1,39 @@
 Social Network
 ================
 
-Heroku: https://young-shore-82576.herokuapp.com/
-This application was generated with the [rails_apps_composer](https://github.com/RailsApps/rails_apps_composer) gem
-provided by the [RailsApps Project](http://railsapps.github.io/).
+App link: https://young-shore-82576.herokuapp.com/
+A small social network with real-time chat, albums, groups, comments, likes and dislikes made in Ruby on Rails and
+deployed on Heroku.
 
-Rails Composer is supported by developers who purchase our RailsApps tutorials.
-
-Problems? Issues?
------------
-
-Need help? Ask on Stack Overflow with the tag 'railsapps.'
-
-Your application contains diagnostics in the README file. Please provide a copy of the README file when reporting any issues.
-
-If the application doesn't work as expected, please [report an issue](https://github.com/RailsApps/rails_apps_composer/issues)
-and include the diagnostics.
-
-Ruby on Rails
--------------
-
-This application requires:
-
-- Ruby 2.1.3
-- Rails 4.2.5
-
-Learn more about [Installing Rails](http://railsapps.github.io/installing-rails.html).
-
-Getting Started
----------------
-
-Documentation and Support
--------------------------
-
-Issues
--------------
-
-Similar Projects
+Gems
 ----------------
+- devise - for authentication, user management and email account confirmation
+- cancancan - for authorization in controllers and views
+- groupify - for easy group creation and management with different user groups
+- paperclip - for managing uploads of images and albums to app
+- public_activity - for loging activity of users and displaying records about them in app as wall statuses etc.
+- has_friendship - for creating and managing friendships, friendship confirmations
+- private_pub - for enabling websocket functionality, subsribing to channels on Faye server
+- thin - for replacing Webrick as default server, due to dufficulties with private_pub on Webrick
+- and various others little gems
 
-Contributing
-------------
-
-Credits
--------
-
-License
--------
+Installation
+----------------
+to run the Thin server run:
+`````````````````````
+rails s
+`````````````````````
+We are using Postgres as our DB in production and developement enviroments, so you have to have postgres installed
+and app database created before migrating. Database names can be found in config/database.yml. To migrate run:
+````````````````````
+rake db:migrate
+````````````````````
+If you want to have live chat and other web-socket functionality you have to run Faye server. To do that run:
+````````````````````
+rackup private_pub.ru -s thin -E production
+````````````````````
+Deployment
+----------------
+If you are deploying this to heroku, there is no easy and free way to make both Thin and Faye work in the same app. Best
+solution for this is to create a separate Heroku app for your Faye server. Example code for that can be found here:
+https://github.com/Hareramrai/fayeserver. You have to adjust config variables so both apps share same key.

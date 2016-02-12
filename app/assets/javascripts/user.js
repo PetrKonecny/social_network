@@ -120,7 +120,6 @@ var ready = function () {
             conversations = conversations.concat(fromCookie);
         }
         for (i=0; i<conversations.length; i++){
-            console.log(conversations[i].toString());
             $.post("/conversations", { sender_id: conversations[i][0], recipient_id: conversations[i][1] }, function (data) {
                 chatBox.chatWith(data.conversation_id);
             });

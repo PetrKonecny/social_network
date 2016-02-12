@@ -1,0 +1,9 @@
+- if a.trackable  and can? :read, a.trackable
+  div [class= 'panel panel-default status']
+    .panel-body
+      .row
+        .col-md-1
+          = image_tag(a.owner.profile.profile_picture.url(:small))
+        .col-md-11
+          h3 = (link_to(a.owner.profile.full_name, a.owner.profile))+ " joined group "+(link_to(a.trackable.name, a.trackable))
+          br

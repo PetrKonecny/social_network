@@ -22,6 +22,7 @@ div [class= 'panel panel-default status']
               = image_tag(friend.profile.profile_picture.url(:thumb))
             .col-md-9
               = link_to(friend.profile.full_name, friend.profile)
+              = link_to "Send Message", "#", class: "btn btn-warning btn-xs start-conversation", "data-sid" => current_user.id, "data-rip" => friend.id
     div[class='panel panel-default status']
       .panel-body
         h4 = "Your groups"

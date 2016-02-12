@@ -35,6 +35,6 @@ br
           = form_tag(insert_user_to_group_group_path, method: "put") do
             = label_tag 'insert_user', 'Add user to group: '
             | &nbsp;
-            = text_field_tag :group_members, '', class: "form-control", placeholder: "Search Profiles"
+            = text_field_tag :group_members, '', class: "form-control", placeholder: "User e-mail"
             br
             = button_tag 'Insert', :type => 'submit', :class => "btn-default"

@@ -9,6 +9,9 @@
           .col-md-10
             strong age:
             = @profile.age
+            br
+            strong email:
+            = @profile.user.email
   .panel-footer
     .side-text
       = link_to 'edit profile info', edit_profile_path(@profile)

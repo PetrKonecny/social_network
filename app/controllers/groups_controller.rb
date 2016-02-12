@@ -18,7 +18,7 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     respond_to do |format|
       if @group.add current_user.profile, as: 'admin'
-        PublicActivity::Activity.where(owner_id: current_user.id, trackable_type: 'GroupMembership').last.destroy
+        @group.create_activity(:group_joined, owner: current_user, recipient: @group)
         format.html { redirect_to groups_path, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
@@ -73,6 +73,7 @@ class GroupsController < ApplicationController
       end
     else
       @group.add new_user.profile
+      @group.create_activity(:group_joined, owner: new_user, recipient: @group)
       respond_to do |format|
         format.html { render :show }
         format.json { redirect_to profile_group_path(@group), notice: 'User successfully added.' }

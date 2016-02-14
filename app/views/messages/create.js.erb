@@ -1,11 +1,6 @@
 <% publish_to @path do %>
   var id = "<%= @conversation.id %>";
-//  var chatbox = $("#chatbox_" + id + " .chatboxcontent");
-//  var chatbox = document.getElementById('mainchat');
   var chatbox = (document.getElementById('mainchat') == null) ? $("#chatbox_" + id + " .chatboxcontent") : $("#mainchat");
-//  if (chatbox == null) {
-//    chatbox = $("#chatbox_" + id + " .chatboxcontent");
-//  }
   var sender_id = "<%= @message.user.id %>";
   var reciever_id = $('meta[name=user-id]').attr("content");
 

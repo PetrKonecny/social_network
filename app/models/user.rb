@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  before_create :build_profile
   has_friendship
   enum role: [:user, :vip, :admin]
   after_initialize :set_default_role, :if => :new_record?
@@ -9,7 +8,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_one :profile
+  has_one :profile, inverse_of: :user
   has_many :reactions
   has_many :comments
   has_many :statuses
@@ -17,6 +16,9 @@ class User < ActiveRecord::Base
   has_many :albums
 
   include PublicActivity::Model
+
+  accepts_nested_attributes_for :profile
+  validates_associated :profile
 
   def get_reaction_to_rateable (rateable)
     reaction = self.reactions.select{|obj| obj.rateable.eql?(rateable)}.first

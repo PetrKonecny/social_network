@@ -1,13 +1,11 @@
 = simple_form_for @album, html: {multipart:true} do |f|
   = f.error_notification
   .form-inputs
-    = f.label :name
-    br
-    = f.text_field :name
-    br
-    = f.label :pictures
-    = file_field_tag "images[]", type: :file, multiple: true
-    br
+    .form-group
+      = f.input :name
+    .form-group
+      = f.label :pictures
+      = file_field_tag "images[]", type: :file, multiple: true
   .form-actions
     = f.button :submit
 

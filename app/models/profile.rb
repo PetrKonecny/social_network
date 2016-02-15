@@ -1,9 +1,11 @@
 class Profile < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :user, inverse_of: :profile
   has_attached_file :profile_picture, styles: { medium: "200x200#", small: "100x100#", thumb: "50x50#" }, default_url: "http://placehold.it/50x50"
   validates_attachment_content_type :profile_picture, content_type: /\Aimage\/.*\Z/
   groupify :group_member
   groupify :named_group_member
+  validates :name, :surname, presence: true
+  validates :age, numericality: {greater_than: 0}, presence: true
 
 
   def full_name

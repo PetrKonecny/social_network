@@ -3,6 +3,8 @@
 
   .form-inputs
     = f.input :name
-    
+
+  = f.input :type_group, :collection => [['private', 'Private'], ['public', 'Public']], :label_method => :last, :value_method => :first, :as => :select, include_blank: false
+
   .form-actions
     = f.button :submit

@@ -1,34 +1,50 @@
-h1 My  groups
+- if @isSearch.nil?
+  h1 My groups
+  = form_tag(groups_path, method: "get") do
+    = label_tag 'search', 'Add group: '
+    | &nbsp;
+    = text_field_tag :search, '', class: "form-control", placeholder: "Search Group"
+    br
+    = submit_tag 'Search', :class => "btn btn-default"
+- else
+  h1 Groups
 
-.vertical-center-row
-  /! Not implemented on tutorial
-  .col-md-8
-    div style=("overflow-x: auto; overflow-y: auto;")
-      .panel.panel-default
-        /! Table
-        table.table
-          thead
-            tr
-              th Name
-              th Action
-              th
-              th
-              th
-          tbody
-            - @groups.each do |group|
-              tr
-                td = group.name
-                td = link_to 'Show wall', group, class: 'btn btn-success'
-                td = link_to 'Show members', show_members_group_path(group.id), class: 'btn btn-success'
-                - if Profile.in_group(group).as(:admin).first == current_user.profile
-                  td = link_to 'Edit', edit_group_path(group.id), class: 'btn btn-info'
-                  td = link_to 'Destroy', group, data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-danger'
-                - else
-                  td
-                  td
+br
+.panel.panel-default
+  /! Table
+  table.table-striped
+    thead
+      tr
+        th.text-center Name
+        th
+        th.text-center Action
+        th
+        th
+    tbody
+      - @groups.each do |group|
+        tr
+          td.text-center = group.name
+          - if group.type_group = 'public'
+            td = link_to 'Show wall', group, class: 'btn btn-success'
+            td = link_to 'Show members', show_members_group_path(group.id), class: 'btn btn-success'
+          - else
+            td
+            td
+          - if Profile.in_group(group).as(:admin).first == current_user.profile
+            td = link_to 'Edit', edit_group_path(group.id), class: 'btn btn-info'
+            td = link_to 'Destroy', group, data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-danger'
+          - else
+            td
+            td
+          - if group.type_group = 'public' && @isSearch != nil
+            td = link_to 'Add to', add_to_group_group_path(group.id), class: 'btn btn-success'
+          - else
+            td
 
 .row
 br
-= link_to 'New Group', new_group_path, class: 'btn btn-default'
+- if @isSearch.nil?
+  = link_to 'New Group', new_group_path, class: 'btn btn-default'
+
 br
 br

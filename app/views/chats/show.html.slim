@@ -1,5 +1,4 @@
 .col-md-3
-  div style=("height: 400px; overflow-y: auto;")
     - if @conversations.any?
       ul.media-list
         - @conversations.each do |conversation|
@@ -11,9 +10,8 @@
             = conversation.messages.last.nil? ? "No messages" : truncate(conversation.messages.last.body, length: 80)
     - else
       p You have no conversations. Click send message with any user to create one.
-.col-md-6
+.col-md-9
   .chat_container
-    div style=("height: 600px; overflow-y: auto;")
       #mainchat.chatboxcontent
         - if @conversation.messages.any?
           = render @conversation.messages
@@ -22,5 +20,4 @@
           = f.text_area :body, class: "chatboxtextarea", "data-cid" => @conversation.id
       = subscribe_to conversation_path(@conversation)
 javascript:
-  var chatbox = $("#mainchat");
-  chatbox.scrollTop(chatbox[0].scrollHeight);
+  $("#mainchat").scrollTop( $("#mainchat")[0].scrollHeight);

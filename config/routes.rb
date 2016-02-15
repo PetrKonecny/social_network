@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       put 'remove_user_from_group'
       put 'create_status'
       get 'show_members'
+      get 'add_to_group'
     end
   end
 

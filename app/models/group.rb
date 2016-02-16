@@ -5,7 +5,7 @@ class Group < ActiveRecord::Base
 
   def self.search(search)
     if search
-      Group.where('name LIKE ?', "%#{search}%")
+      where('unaccent(lower(name)) like?', "%#{search.unaccent.downcase}%")
     else
       find(:with_member => current_user.profile)
     end

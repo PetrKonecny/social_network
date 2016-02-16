@@ -7,6 +7,7 @@ class ProfilesController < ApplicationController
   def index
     if params[:search]
       @profiles = Profile.search(params[:search]).order("surname ASC")
+      @groups = Group.search(params[:search]).order("name ASC")
     else
       @profiles = Profile.all.order("surname ASC")
     end

@@ -1,13 +1,22 @@
 .col-md-3
     - if @conversations.any?
-      ul.media-list
-        - @conversations.each do |conversation|
-          li.media
-            = image_tag(conversation_interlocutor(conversation).profile.profile_picture.url(:thumb), class: "media-object pull-left")
-            /.media-body
-            = link_to "", chat_path(conversation.id)
-            h4.media-heading= conversation_interlocutor(conversation).profile.full_name
-            = conversation.messages.last.nil? ? "No messages" : truncate(conversation.messages.last.body, length: 80)
+      div[class='panel status']
+        .panel-body
+          ul.media-list
+            - @conversations.each do |conversation|
+              - if @conversation.eql?(conversation)
+                li.media.comment
+                  = image_tag(conversation_interlocutor(conversation).profile.profile_picture.url(:thumb), class: "media-object pull-left")
+                  = link_to "", chat_path(conversation.id)
+                  h4.media-heading= conversation_interlocutor(conversation).profile.full_name
+                  = conversation.messages.last.nil? ? "No messages" : truncate(conversation.messages.last.body, length: 80)
+              -else
+                li.media
+                  = image_tag(conversation_interlocutor(conversation).profile.profile_picture.url(:thumb), class: "media-object pull-left")
+                  = link_to "", chat_path(conversation.id)
+                  h4.media-heading= conversation_interlocutor(conversation).profile.full_name
+                  = conversation.messages.last.nil? ? "No messages" : truncate(conversation.messages.last.body, length: 80)
+
     - else
       p You have no conversations. Click send message with any user to create one.
 .col-md-9

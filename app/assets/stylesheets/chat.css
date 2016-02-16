@@ -175,15 +175,23 @@
 }
 
 .chat_container .chatboxcontent {
-    width: 540px;
-    height: 500px;
+    width: auto;
+    height: 69vh;
 }
 
 .chat_container .chatboxtextarea {
-    width: 520px;
+    width: auto;
 }
 
 .chat_container .chatboxinput {
-    width: 540px;
+    width: auto;
+}
+
+.chat_container .chatboxmessagecontent p{
+    font-size: 20px;
+}
+
+.chat_container .chatboxmessagecontent time {
+    font-size: 15px;
 }
 Raw

@@ -1,7 +1,7 @@
-h1 Your albums
 .status
   .panel
     .panel-body
+      h3 Your albums
       .row
         - @albums.each do |album|
           div [class="col-xs-6 col-md-3"]
@@ -11,10 +11,10 @@ h1 Your albums
 .row
   = link_to 'New album', new_album_path, class: 'btn btn-default'
 -unless @friend_albums.empty?
-  h1 Your friends albums
   .status
     .panel
       .panel-body
+        h3 Your friends albums
         .row
           - @friend_albums.each do |album|
             div [class="col-xs-6 col-md-3"]

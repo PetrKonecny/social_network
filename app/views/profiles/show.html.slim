@@ -1,62 +1,60 @@
-.status
-  .panel-body
-    h2 = @profile.full_name
-    .comment
+.row
+  .col-md-9
+    .status
       .panel-body
-        .row
-          .col-md-2
-            = image_tag(@profile.profile_picture.url(:medium))
-          .col-md-10
-            strong age:
-            = @profile.age
-            br
-            strong email:
-            = @profile.user.email
-  .panel-footer
-    .side-text
-      = link_to 'edit profile info', edit_profile_path(@profile)
-p
--if @profile.user != current_user
-  h3 = raw "You and " + @profile.name
-  .status
-    .panel-body
-      - if can? :unfriend, @profile
-        h5 = "are friends"
-        = link_to 'Cancel friendship', unfriend_profile_path(@profile), :class => 'btn btn-danger btn-xs', data: {:confirm => 'Do you really want to cancel friendship?'}
-      - elsif can? :pending_friend_request, @profile
-        h5 = "Friend request sent, wait for #{@profile.full_name}  to respond"
-      - else
-        h5 = "are not friends"
-        = link_to 'Send friend request', friend_profile_path(@profile), :class => 'btn btn-default btn-xs'
-
-
-h3 Friends
-.status
-  .panel-body
-    - if can? :unfriend, @profile
-    h4 = @profile.user.friends.count.to_s + " friends total :"
-    - @profile.user.friends.each do |friend|
-      div [class="col-xs-6 col-md-2 comment"]
-        div [class="panel-header center"]
-            h5 = friend.profile.full_name
+        h2 = @profile.full_name
+        .comment
+          .panel-body
+            .row
+              .col-md-2
+                = image_tag(@profile.profile_picture.url(:medium))
+              .col-md-10
+                strong age:
+                = @profile.age
+                br
+                strong email:
+                = @profile.user.email
+      .panel-footer
+        .side-text
+          = link_to 'edit profile info', edit_profile_path(@profile)
+    p
+    -if @profile.user != current_user
+      h3 = raw "You and " + @profile.name
+      .status
         .panel-body
-          = link_to image_tag(friend.profile.profile_picture.url(:small)), friend.profile
+          - if can? :unfriend, @profile
+            h5 = "are friends"
+            = link_to 'Cancel friendship', unfriend_profile_path(@profile), :class => 'btn btn-danger btn-xs', data: {:confirm => 'Do you really want to cancel friendship?'}
+          - elsif can? :pending_friend_request, @profile
+            h5 = "Friend request sent, wait for #{@profile.full_name}  to respond"
+          - else
+            h5 = "are not friends"
+            = link_to 'Send friend request', friend_profile_path(@profile), :class => 'btn btn-default btn-xs'
+    -unless @profile.user.albums.empty?
+      h3 = @profile.name + "'s albums"
+      .status
+        .panel-body
+          .row
+            - @profile.user.albums.each do |album|
+              div [class="col-xs-6 col-md-3"]
+                = album.name
+                - unless album.images.empty?
+                  = link_to image_tag(album.images.first.image.url(:thumb)), album, {class: "thumbnail"}
 
-h3 Albums
-.status
-  .panel-body
-    .row
-      - @profile.user.albums.each do |album|
-        div [class="col-xs-6 col-md-3"]
-          = album.name
-          - unless album.images.empty?
-            = link_to image_tag(album.images.first.image.url(:thumb)), album, {class: "thumbnail"}
-  .panel-footer
-    .side-text
-      = link_to 'New Album', new_album_path
+    -unless @activities.empty?
+      h3 = @profile.name + "'s recent activity"
+      = render_activities(@activities)
 
-
-
-h3 Recent activity
-= render_activities(@activities)
+  div[class='col-md-3 no-padding']
+    div[class='panel panel-default status']
+      .panel-body
+        h4 = @profile.name + "'s friends"
+        -@profile.user.friends.each do |friend|
+          .row
+            .col-md-3
+              = image_tag(friend.profile.profile_picture.url(:thumb))
+            .col-md-9
+              = link_to(friend.profile.full_name, friend.profile)
+              .side-text
+                = link_to "Send Message", "#", class: "start-conversation", "data-sid" => current_user.id, "data-rip" => friend.id
 

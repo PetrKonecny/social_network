@@ -36,8 +36,8 @@ br
             .col-md-9
               = link_to(member.full_name , member)
               -if can? :remove_user_from_group, @group
-              .side-text
-                = link_to 'Remove', remove_user_from_group_group_path(:remove_profile => member.id), data: {:confirm => 'Are you sure?'}, :method => :put
+                .side-text
+                  = link_to 'Remove', remove_user_from_group_group_path(:remove_profile => member.id), data: {:confirm => 'Are you sure?'}, :method => :put
           br
         - if can? :insert_user_to_group, @group
           = form_tag(insert_user_to_group_group_path, method: "put") do

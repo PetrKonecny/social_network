@@ -173,11 +173,17 @@
 .chatboxtitle {
     float: left;
 }
+
 .chat_container .chatboxcontent {
     width: 540px;
     height: 500px;
 }
+
 .chat_container .chatboxtextarea {
     width: 520px;
+}
+
+.chat_container .chatboxinput {
+    width: 540px;
 }
 Raw

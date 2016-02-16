@@ -43,6 +43,10 @@ class Ability
       user.profile.in_group?(group)
     end
 
+    can :show, Conversation do |conversation|
+      conversation.sender == user || conversation.recipient == user
+    end
+
 
     # Define abilities for the passed in user here. For example:
     #

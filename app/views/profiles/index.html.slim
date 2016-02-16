@@ -1,53 +1,11 @@
-h1 Listing profiles
-- if @profiles.empty?
-  hr
-  h3 No profiles matching your search criteria has been found
-- else
-  table.table.table-striped.fixed
-    thead
-      tr
-        th Name
-        th Age
-        th
-        th
-    tbody
-      - @profiles.each do |profile|
-        tr
-          td = profile.full_name
-          td = profile.age
-          td = link_to 'View', profile, class: "btn btn-success btn-xs"
-          td = link_to "Send Message", "#", class: "btn btn-warning btn-xs start-conversation", "data-sid" => current_user.id, "data-rip" => profile.user.id
+- unless @profiles.empty?
+  h3 We found #{@profiles.count} profiles matching :
+  - @profiles.each do |profile|
+    = render partial: 'search', locals:{profile: profile}
 
-h1 Listing Groups
-- if @groups.empty?
-  hr
-  h3 No groups matching your search criteria has been found
-- else
-  table.table.table-striped.fixed
-    thead
-      tr
-        th Name
-        th
-        th Actions
-        th
-        th
-    tbody
-      - @groups.each do |group|
-        tr
-          td = group.name
-          - if group.type_group == 'public'
-            td = link_to 'Show wall', group, class: 'btn btn-success'
-            td = link_to 'Show members', show_members_group_path(group.id), class: 'btn btn-success'
-          - else
-            td
-            td
-          - if Profile.in_group(group).as(:admin).first == current_user.profile
-            td = link_to 'Edit', edit_group_path(group.id), class: 'btn btn-info'
-            td = link_to 'Destroy', group, data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-danger'
-          - else
-            td
-            td
-          - if group.type_group == 'public' && !current_user.profile.in_group?(group)
-            td = link_to 'Add to', add_to_group_group_path(group.id), class: 'btn btn-success'
-          - else
-            td
+- unless @groups.empty?
+  h3 We found #{@groups.count} groups matching :
+  - @groups.each do |group|
+    = render partial: 'groups/search', locals:{group: group}
+-if @profiles.empty? && @groups.empty?
+  h3 Sorry we didn't find anything matching your query.

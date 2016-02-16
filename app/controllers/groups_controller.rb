@@ -8,13 +8,8 @@ class GroupsController < ApplicationController
   helper_method :add_to_group
 
   def index
-    if params.has_key?(:search) then
-      @groups = Group.search(params[:search])
-      @isSearch = 1
-    else
-      @groups = Group.with_member(current_user.profile)
-      @isSearch = nil
-    end
+    @groups = Group.with_member(current_user.profile)
+    @friend_groups = current_user.friends.map{|f| f.profile.groups}.flatten
   end
 
   def new
@@ -133,7 +128,7 @@ class GroupsController < ApplicationController
 
       # Never trust parameters from the scary internet, only allow the white list through.
     def group_params
-      params.require(:group).permit(:name, :type_group)
+      params.require(:group).permit(:name, :type_group, :description)
     end
 
 end

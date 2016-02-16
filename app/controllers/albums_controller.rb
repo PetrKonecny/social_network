@@ -4,8 +4,8 @@ class AlbumsController < ApplicationController
   # GET /albums
   # GET /albums.json
   def index
-    @album = Album.new
     @albums = current_user.albums
+    @friend_albums = current_user.friends.map{|f| f.albums}.flatten
   end
 
   # GET /albums/1

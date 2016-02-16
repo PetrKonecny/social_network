@@ -1,13 +1,24 @@
-h1 Create new album
-.status
-  .panel-body
-    == render 'form'
 h1 Your albums
 .status
-  .panel-body
-    .row
-      - @albums.each do |album|
-        div [class="col-xs-6 col-md-3"]
-          h4 = album.name
-          = link_to image_tag(album.images.first.image.url(:thumb)), album, { class: "thumbnail" }
-    br
+  .panel
+    .panel-body
+      .row
+        - @albums.each do |album|
+          div [class="col-xs-6 col-md-3"]
+            h4 = album.name
+            = link_to image_tag(album.images.first.image.url(:thumb)), album, { class: "thumbnail" }
+      br
+.row
+  = link_to 'New album', new_album_path, class: 'btn btn-default'
+-unless @friend_albums.empty?
+  h1 Your friends albums
+  .status
+    .panel
+      .panel-body
+        .row
+          - @friend_albums.each do |album|
+            div [class="col-xs-6 col-md-3"]
+              h4 = album.name
+              = link_to image_tag(album.images.first.image.url(:thumb)), album, { class: "thumbnail" }
+        br
+  .row

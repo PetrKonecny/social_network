@@ -10,4 +10,9 @@ class Group < ActiveRecord::Base
       find(:with_member => current_user.profile)
     end
   end
+
+  def members
+    Profile.in_group(self)
+  end
+
 end

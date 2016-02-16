@@ -1,0 +1,14 @@
+div[class="panel panel-body status search"]
+  .col-md-2
+    h4 = link_to(group.name,group)
+    | #{group.members.count} members
+  .col-md-10
+    .panel-body
+      -if group.description
+        =group.description
+      -else
+        |No group description
+    .panel-footer
+      .side-text
+        -if can? :add_to_group, group
+          = link_to 'Join', add_to_group_group_path(group.id)

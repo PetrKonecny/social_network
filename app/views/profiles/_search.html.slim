@@ -1,0 +1,11 @@
+div[class="panel panel-body status search"]
+  .col-md-1
+    = image_tag(profile.profile_picture.url(:thumb))
+  .col-md-2
+    h4 = link_to profile.full_name, profile
+  .col-md-9
+    .panel-body
+      |You have #{profile.user.common_friends(current_user).count} common friends.
+    .panel-footer
+      .side-text
+        =link_to "Send Message", "#", class: "start-conversation", "data-sid" => current_user.id, "data-rip" => profile.user.id

@@ -35,7 +35,7 @@ class Ability
       user.get_reaction_to_rateable(image).nil?
     end
 
-    can :manage, Group do |group|
+    can [:crud, :insert_user_to_group, :remove_user_from_group], Group do |group|
       user.profile.in_group?(group, as: 'admin')
     end
 
@@ -43,9 +43,16 @@ class Ability
       user.profile.in_group?(group)
     end
 
-    can :show, Conversation do |conversation|
+    can [:show,:update], Conversation do |conversation|
       conversation.sender == user || conversation.recipient == user
     end
+
+    can :create, Conversation
+
+    can :add_to_group, Group do |group|
+      group.members.exclude?(user.profile) && group.type_group.eql?("public")
+    end
+
 
 
     # Define abilities for the passed in user here. For example:

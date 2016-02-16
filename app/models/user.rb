@@ -29,7 +29,12 @@ class User < ActiveRecord::Base
     self.friends.collect { |x| x.id } << self.id
   end
 
+  def common_friends (friend)
+    self.friends & friend.friends
+  end
+
   def set_default_role
     self.role ||= :user
   end
+
 end

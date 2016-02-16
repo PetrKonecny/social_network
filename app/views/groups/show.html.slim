@@ -1,5 +1,6 @@
 p
   h2 = @group.name
+  = @group.description
 
 br
 -if can? :create_status, @group
@@ -15,7 +16,11 @@ br
           = text_field_tag :status, '', class: "string required form-control"
           br
           = button_tag 'Post', :type => 'submit', class: "btn btn-default"
-
+    -if can? :crud, @group
+      .panel-footer
+        .side-text
+          = link_to 'Edit group info ', edit_group_path(@group.id)
+          = link_to 'Delete group', @group, data: {:confirm => 'Are you sure?'}, :method => :delete
 .row
   .col-md-9
     - @group.statuses.each do |status|
@@ -30,8 +35,11 @@ br
               = image_tag(member.profile_picture.url(:thumb))
             .col-md-9
               = link_to(member.full_name , member)
+              -if can? :remove_user_from_group, @group
+              .side-text
+                = link_to 'Remove', remove_user_from_group_group_path(:remove_profile => member.id), data: {:confirm => 'Are you sure?'}, :method => :put
           br
-        - if can? :manage, @group
+        - if can? :insert_user_to_group, @group
           = form_tag(insert_user_to_group_group_path, method: "put") do
             = label_tag 'insert_user', 'Add user to group: '
             | &nbsp;

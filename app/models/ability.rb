@@ -62,7 +62,8 @@ class Ability
     can :add_to_group, Group do |group|
       group.members.exclude?(user.profile) && group.type_group.eql?("public")
     end
-
+    can :create, Group
+    
     can [:show,:update], Conversation do |conversation|
       conversation.sender.eql?(user) || conversation.recipient.eql?(user)
     end

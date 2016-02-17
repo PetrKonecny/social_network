@@ -1,8 +1,9 @@
 h3 Your groups
 - @groups.each do |group|
   = render partial: 'groups/search', locals: {group: group}
-.row
-  = link_to 'New Group', new_group_path, class: 'btn btn-default'
+.panel-body
+  .row
+    = link_to 'New Group', new_group_path, class: 'btn btn-default'
 -unless @friend_groups.empty?
   h3 Groups of your friends
   - @friend_groups.each do |group|

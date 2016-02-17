@@ -1,7 +1,7 @@
 h1 Editing profile
 
 
-- if can? :accept_friend_request, @profile
+- unless @profile.user.requested_friends.empty?
   hr
   h2 = 'Incoming friend requests:'
   - @profile.user.requested_friends.each do |friend|

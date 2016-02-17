@@ -7,6 +7,9 @@ class GroupsController < ApplicationController
   helper_method :create_status
   helper_method :add_to_group
 
+  before_action :authenticate_user!
+  load_and_authorize_resource
+
   def index
     @groups = Group.with_member(current_user.profile)
     @friend_groups = current_user.friends.map{|f| f.profile.groups}.flatten

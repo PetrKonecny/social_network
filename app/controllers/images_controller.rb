@@ -1,5 +1,7 @@
 class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :destroy, :like, :dislike]
+  before_action :authenticate_user!
+  load_and_authorize_resource
 
   # GET /images/1
   # GET /images/1.json

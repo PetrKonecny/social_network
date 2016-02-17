@@ -1,6 +1,6 @@
 class Group < ActiveRecord::Base
   groupify :group
-  has_many :statuses
+  has_many :statuses, dependent: :destroy
   include PublicActivity::Model
 
   def self.search(search)

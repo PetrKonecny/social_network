@@ -4,54 +4,69 @@ class Ability
   def initialize(user)
 
     user ||= User.new
+
     alias_action :create, :read, :update, :destroy, to: :crud
     alias_action :like, :dislike, to: :rate
     alias_action :friend_accept, :friend_decline, :to => :requests
-    can :crud, Comment, user_id: user.id
+
     can :crud, User, user_id: user.id
+
+    can :crud, Album, user_id: user.id
+    can :read, Album do |album|
+      album.user.is_friend?(user)
+    end
+
+    can :rate, Image do |image|
+      user.get_reaction_to_rateable(image).nil?
+    end
+    can [:read,:destroy], Image do |image|
+      image.album.user.eql?(user)
+    end
+    can :read, Image do |image|
+      image.album.user.is_friend?(user)
+    end
+
     can :crud, Profile, user_id: user.id
     can :requests, Profile, user_id: user.id
     can :read, Profile
-    can :friend, Profile
+    can :read_full, Profile do |profile|
+      profile.user.friends.include?(user) || profile.user.eql?(user)
+    end
+    can :friend, Profile do |profile|
+      profile.user.friends.exclude?(user)
+    end
     can :unfriend, Profile do |profile|
       profile.user.friends.include?(user)
     end
-    can :pending_friend_request, Profile do |profile|
-      profile.user.requested_friends.include?(user)
-    end
-    unless user.requested_friends.empty?
-      can :accept_friend_request, Profile
-    end
+
     can :crud, Status, user_id: user.id
-    can :read, Status
-    can :read, Comment
-    can :rate, Comment do |comment|
-      user.get_reaction_to_rateable(comment).nil?
+    can :read, Status do |status|
+      status.user.is_friend?(user)
     end
     can :rate, Status do |status|
       user.get_reaction_to_rateable(status).nil?
     end
-    can :rate, Image do |image|
-      user.get_reaction_to_rateable(image).nil?
+
+    can :crud, Comment, user_id: user.id
+    can :read, Comment
+    can :rate, Comment do |comment|
+      user.get_reaction_to_rateable(comment).nil?
     end
 
     can [:crud, :insert_user_to_group, :remove_user_from_group], Group do |group|
       user.profile.in_group?(group, as: 'admin')
     end
-
     can [:read, :create_status], Group do |group|
       user.profile.in_group?(group)
     end
-
-    can [:show,:update], Conversation do |conversation|
-      conversation.sender == user || conversation.recipient == user
-    end
-
-    can :create, Conversation
-
     can :add_to_group, Group do |group|
       group.members.exclude?(user.profile) && group.type_group.eql?("public")
     end
+
+    can [:show,:update], Conversation do |conversation|
+      conversation.sender.eql?(user) || conversation.recipient.eql?(user)
+    end
+    can :create, Conversation
 
 
 

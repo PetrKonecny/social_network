@@ -9,11 +9,12 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_one :profile, inverse_of: :user
-  has_many :reactions
-  has_many :comments
-  has_many :statuses
+  has_many :reactions, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :statuses, dependent: :destroy
   has_many :conversations, :foreign_key => :sender_id
-  has_many :albums
+  has_many :albums, dependent: :destroy
+  has_many :images, through: :albums, dependent: :destroy
 
   include PublicActivity::Model
 
@@ -31,6 +32,10 @@ class User < ActiveRecord::Base
 
   def common_friends (friend)
     self.friends & friend.friends
+  end
+
+  def is_friend?(friend)
+    friends.include?(friend)
   end
 
   def set_default_role

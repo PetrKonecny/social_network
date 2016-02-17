@@ -180,7 +180,7 @@
 }
 
 .chat_container .chatboxtextarea {
-    width: auto;
+    width: 99%;
 }
 
 .chat_container .chatboxinput {

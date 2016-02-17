@@ -22,11 +22,12 @@
 .col-md-9
   .chat_container
       #mainchat.chatboxcontent
-        - if @conversation.messages.any?
+        - if @conversation && @conversation.messages.any?
           = render @conversation.messages
-      .chatboxinput
-        = form_for([@conversation, @message], :remote => true, :html => {id: "conversation_form_#{@conversation.id}"}) do |f|
-          = f.text_area :body, class: "chatboxtextarea", "data-cid" => @conversation.id
-      = subscribe_to conversation_path(@conversation)
+      - if @conversation
+        .chatboxinput
+          = form_for([@conversation, @message], :remote => true, :html => {id: "conversation_form_#{@conversation.id}"}) do |f|
+            = f.text_area :body, class: "chatboxtextarea", "data-cid" => @conversation.id
+        = subscribe_to conversation_path(@conversation)
 javascript:
   $("#mainchat").scrollTop( $("#mainchat")[0].scrollHeight);

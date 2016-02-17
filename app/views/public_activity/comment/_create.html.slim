@@ -1,5 +1,7 @@
 - if a.trackable and a.trackable.commentable
   div [class= 'panel panel-default status']
+    .panel-heading
+      =a.created_at.strftime('%H:%M:%S %-d %B %Y')
     .panel-body
       .row
         .col-md-1

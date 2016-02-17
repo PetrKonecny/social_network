@@ -32,6 +32,7 @@ gem 'sixarm_ruby_unaccent'
 gem 'private_pub'
 gem 'thin'
 gem 'groupify'
+gem 'enum_help'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]

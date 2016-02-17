@@ -5,6 +5,8 @@
     = f.input :name
     = f.input :surname
     = f.input :age
+    = f.input :gender
+    = f.input :relationship_status
     .left
       strong profile picture
       = image_tag(@profile.profile_picture.url(:medium))

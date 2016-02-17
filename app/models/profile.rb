@@ -4,8 +4,10 @@ class Profile < ActiveRecord::Base
   validates_attachment_content_type :profile_picture, content_type: /\Aimage\/.*\Z/
   groupify :group_member
   groupify :named_group_member
-  validates :name, :surname, presence: true
+  validates :name, :surname, :gender, :relationship_status, presence: true
   validates :age, numericality: {greater_than: 0}, presence: true
+  enum gender: [ :male, :female ]
+  enum relationship_status: [ :single, :married, :"it's complicated", :'in a relationship']
 
 
   def full_name
